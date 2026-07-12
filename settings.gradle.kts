@@ -17,6 +17,9 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        repositories {
+            maven(url = "https://caarmen.github.io/cobol-mobile")
+        }
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
