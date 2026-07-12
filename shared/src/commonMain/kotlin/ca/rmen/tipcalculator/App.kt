@@ -14,6 +14,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import ca.rmen.gnucobol.kmp.GnuCOBOL
+import ca.rmen.tipcalculator.domain.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.TipInput
 import org.jetbrains.compose.resources.painterResource
 
 import tipcalculator.shared.generated.resources.Res
@@ -22,6 +25,19 @@ import tipcalculator.shared.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
+    remember {
+        // This just tests all the wiring from the common compose code
+        // down to COBOL.
+        // TODO move this into a viewmodel/usecase...
+        GnuCOBOL.initialize()
+        val tipResult = CalculateTipUseCase(TipInput(
+            amountWithTax = 100.0,
+            taxAmount = 8.0,
+            serviceLevel = 0,
+            numberCustomer = 2,
+        )).invoke()
+        println("CARM tipResult $tipResult")
+    }
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
