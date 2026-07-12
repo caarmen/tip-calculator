@@ -7,42 +7,62 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0CBDC8AE0490F8000365148 = {
-			isa = PBXBuildFile;
-			productRef = DE5176447663101D9E1F3A1A;
-		};
+		A0CBDC8AE0490F8000365148 /* KotlinMultiplatformLinkedPackage in Frameworks */ = {isa = PBXBuildFile; productRef = DE5176447663101D9E1F3A1A /* KotlinMultiplatformLinkedPackage */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXFileReference section */
-		BFEE150D9AD496D0585774C3 = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.application;
-			includeInIndex = 0;
-			path = TipCalculator.app;
-			sourceTree = BUILT_PRODUCTS_DIR;
+/* Begin PBXBuildRule section */
+		1A9C092D300417A200F36401 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.cob";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).c",
+			);
+			script = "COB_COPY_DIR=\"${INPUT_FILE_DIR}\" cobc -g -C \"${INPUT_FILE_PATH}\" -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}.c\" --save-temps=\"${DERIVED_FILE_DIR}\"\n";
 		};
+/* End PBXBuildRule section */
+
+/* Begin PBXFileReference section */
+		BFEE150D9AD496D0585774C3 /* TipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2DA89A88EE33594C1F337E44 = {
+		2DA89A88EE33594C1F337E44 /* Exceptions for "iosApp" folder in "iosApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 5B95F4331DF342DEA7E48B52;
+			target = 5B95F4331DF342DEA7E48B52 /* iosApp */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		773F7EC04B8DDC90037C9CDA = {
+		1A9C09253004174D00F36401 /* cobol */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+				tipcalc.cob = sourcecode.c;
+				tipinput.cpy = sourcecode.c;
+				tipoutput.cpy = sourcecode.c;
+				tipreport.cob = sourcecode.c;
+				tipservice.cob = sourcecode.c;
+			};
+			name = cobol;
+			path = ../shared/src/commonMain/cobol;
+			sourceTree = SOURCE_ROOT;
+		};
+		773F7EC04B8DDC90037C9CDA /* iosApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				2DA89A88EE33594C1F337E44,
+				2DA89A88EE33594C1F337E44 /* Exceptions for "iosApp" folder in "iosApp" target */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
 		};
-		EE2467B87CAD352AD7F44460 = {
+		EE2467B87CAD352AD7F44460 /* Configuration */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Configuration;
 			sourceTree = "<group>";
@@ -50,21 +70,21 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0C543246CA168F94E52F7995 = {
+		0C543246CA168F94E52F7995 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0CBDC8AE0490F8000365148,
+				A0CBDC8AE0490F8000365148 /* KotlinMultiplatformLinkedPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		37870747E79A47143719FF4D = {
+		37870747E79A47143719FF4D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFEE150D9AD496D0585774C3,
+				BFEE150D9AD496D0585774C3 /* TipCalculator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,43 +92,46 @@
 		981CF2FA930A099955243621 = {
 			isa = PBXGroup;
 			children = (
-				EE2467B87CAD352AD7F44460,
-				773F7EC04B8DDC90037C9CDA,
-				37870747E79A47143719FF4D,
+				1A9C09253004174D00F36401 /* cobol */,
+				EE2467B87CAD352AD7F44460 /* Configuration */,
+				773F7EC04B8DDC90037C9CDA /* iosApp */,
+				37870747E79A47143719FF4D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5B95F4331DF342DEA7E48B52 = {
+		5B95F4331DF342DEA7E48B52 /* iosApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C3D0C81631416079DD85744;
+			buildConfigurationList = 2C3D0C81631416079DD85744 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
-				3E8E0D73273C04439EE0AAA1,
-				5AA7F8F4B2153EBF9DCF1207,
-				0C543246CA168F94E52F7995,
-				10B78CE265A3835782AB5A55,
+				3E8E0D73273C04439EE0AAA1 /* Compile Kotlin Framework */,
+				5AA7F8F4B2153EBF9DCF1207 /* Sources */,
+				0C543246CA168F94E52F7995 /* Frameworks */,
+				10B78CE265A3835782AB5A55 /* Resources */,
 			);
 			buildRules = (
+				1A9C092D300417A200F36401 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				773F7EC04B8DDC90037C9CDA,
+				1A9C09253004174D00F36401 /* cobol */,
+				773F7EC04B8DDC90037C9CDA /* iosApp */,
 			);
 			name = iosApp;
 			packageProductDependencies = (
-				DE5176447663101D9E1F3A1A,
+				DE5176447663101D9E1F3A1A /* KotlinMultiplatformLinkedPackage */,
 			);
 			productName = iosApp;
-			productReference = BFEE150D9AD496D0585774C3;
+			productReference = BFEE150D9AD496D0585774C3 /* TipCalculator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		18EF747AC2B660165461668C = {
+		18EF747AC2B660165461668C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
@@ -117,10 +140,11 @@
 				TargetAttributes = {
 					5B95F4331DF342DEA7E48B52 = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 2650;
 					};
 				};
 			};
-			buildConfigurationList = 3617BFDC9415C35B65D26E22;
+			buildConfigurationList = 3617BFDC9415C35B65D26E22 /* Build configuration list for PBXProject "iosApp" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -130,20 +154,20 @@
 			mainGroup = 981CF2FA930A099955243621;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F1318D9CC1341816103CCD38,
+				F1318D9CC1341816103CCD38 /* XCLocalSwiftPackageReference "KotlinMultiplatformLinkedPackage" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 37870747E79A47143719FF4D;
+			productRefGroup = 37870747E79A47143719FF4D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5B95F4331DF342DEA7E48B52,
+				5B95F4331DF342DEA7E48B52 /* iosApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		10B78CE265A3835782AB5A55 = {
+		10B78CE265A3835782AB5A55 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -153,7 +177,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3E8E0D73273C04439EE0AAA1 = {
+		3E8E0D73273C04439EE0AAA1 /* Compile Kotlin Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -175,7 +199,7 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5AA7F8F4B2153EBF9DCF1207 = {
+		5AA7F8F4B2153EBF9DCF1207 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -185,9 +209,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		101AE5D9CE542F04DE75933D = {
+		101AE5D9CE542F04DE75933D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = EE2467B87CAD352AD7F44460;
+			baseConfigurationReferenceAnchor = EE2467B87CAD352AD7F44460 /* Configuration */;
 			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -250,16 +274,17 @@
 			};
 			name = Debug;
 		};
-		401859404E579FA646A61A75 = {
+		401859404E579FA646A61A75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = F5C7EM458Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -272,15 +297,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-lxml2";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iosApp/iosApp-BridgingHeader.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		6BFEE7B957A2C871B557CE8E = {
+		6BFEE7B957A2C871B557CE8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = EE2467B87CAD352AD7F44460;
+			baseConfigurationReferenceAnchor = EE2467B87CAD352AD7F44460 /* Configuration */;
 			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -336,16 +363,17 @@
 			};
 			name = Release;
 		};
-		A60D2F6F414E2CE3EAD7B39E = {
+		A60D2F6F414E2CE3EAD7B39E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = F5C7EM458Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -358,7 +386,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-lxml2";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iosApp/iosApp-BridgingHeader.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -367,20 +398,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2C3D0C81631416079DD85744 = {
+		2C3D0C81631416079DD85744 /* Build configuration list for PBXNativeTarget "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A60D2F6F414E2CE3EAD7B39E,
-				401859404E579FA646A61A75,
+				A60D2F6F414E2CE3EAD7B39E /* Debug */,
+				401859404E579FA646A61A75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3617BFDC9415C35B65D26E22 = {
+		3617BFDC9415C35B65D26E22 /* Build configuration list for PBXProject "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				101AE5D9CE542F04DE75933D,
-				6BFEE7B957A2C871B557CE8E,
+				101AE5D9CE542F04DE75933D /* Debug */,
+				6BFEE7B957A2C871B557CE8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -388,18 +419,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		F1318D9CC1341816103CCD38 = {
+		F1318D9CC1341816103CCD38 /* XCLocalSwiftPackageReference "KotlinMultiplatformLinkedPackage" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = KotlinMultiplatformLinkedPackage;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DE5176447663101D9E1F3A1A = {
+		DE5176447663101D9E1F3A1A /* KotlinMultiplatformLinkedPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KotlinMultiplatformLinkedPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 18EF747AC2B660165461668C;
+	rootObject = 18EF747AC2B660165461668C /* Project object */;
 }

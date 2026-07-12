@@ -1,6 +1,7 @@
 build/
 .idea/
 xcuserdata/
+xcshareddata/
 .gradle/
 .kotlin/
 .cxx/
