@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ca.rmen.gnucobol.kmp.GnuCOBOL
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.TipInput
 import org.jetbrains.compose.resources.painterResource
 
@@ -24,18 +25,27 @@ import tipcalculator.shared.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    reportPathProvider: ReportPathProvider = object : ReportPathProvider {
+        override fun reportPath(filename: String): String {
+            return "/tmp/report.txt"
+        }
+    }
+) {
     remember {
         // This just tests all the wiring from the common compose code
         // down to COBOL.
         // TODO move this into a viewmodel/usecase...
         GnuCOBOL.initialize()
-        val tipResult = CalculateTipUseCase(TipInput(
-            amountWithTax = 100.0,
-            taxAmount = 8.0,
-            serviceLevel = 0,
-            numberCustomer = 2,
-        )).invoke()
+        val tipResult = CalculateTipUseCase(
+            reportPathProvider,
+            TipInput(
+                amountWithTax = 100.0,
+                taxAmount = 8.0,
+                serviceLevel = 0,
+                numberCustomer = 2,
+            )
+        ).invoke()
         println("CARM tipResult $tipResult")
     }
     MaterialTheme {
