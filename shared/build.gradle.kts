@@ -16,6 +16,15 @@ kotlin {
             baseName = "Shared"
             isStatic = true
         }
+        iosTarget.compilations.getByName("main") {
+            cinterops {
+                val tipCalculator by creating {
+                    compilerOpts(
+                        "-I${project.rootDir}/shared/src/iosMain/cpp"
+                    )
+                }
+            }
+        }
     }
     
     androidLibrary {
