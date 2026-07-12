@@ -39,11 +39,17 @@ android {
                 cppFlags += ""
             }
         }
+        ndk {
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    buildFeatures {
+        prefab = true
     }
     buildTypes {
         getByName("release") {
