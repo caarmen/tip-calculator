@@ -20,7 +20,11 @@ kotlin {
     
     androidLibrary {
        namespace = "ca.rmen.tipcalculator.shared"
-       compileSdk = libs.versions.android.compileSdk.get().toInt()
+       compileSdk {
+          version = release(libs.versions.android.compileSdk.get().toInt()) {
+              minorApiLevel = libs.versions.android.compileSdkMinorApiLevel.get().toInt()
+          }
+       }
        minSdk = libs.versions.android.minSdk.get().toInt()
     
        compilerOptions {

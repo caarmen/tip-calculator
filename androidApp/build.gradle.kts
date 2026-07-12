@@ -22,7 +22,11 @@ dependencies {
 
 android {
     namespace = "ca.rmen.tipcalculator"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.android.compileSdk.get().toInt()) {
+            minorApiLevel = libs.versions.android.compileSdkMinorApiLevel.get().toInt()
+        }
+    }
 
     defaultConfig {
         applicationId = "ca.rmen.tipcalculator"
