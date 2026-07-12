@@ -1,5 +1,6 @@
 #include <jni.h>
 #include <libcob.h>
+#include <string.h>
 #include "TipCalculatorBridge.h"
 
 JNIEXPORT jdoubleArray JNICALL
@@ -18,7 +19,15 @@ Java_ca_rmen_tipcalculator_BridgeKt_handleTipRequest(JNIEnv *env,
     input.number_customers = number_customer;
 
 
-    char in_report_file_path[100]; // unused for now
+    char in_report_file_path[100];
+    memset(in_report_file_path, ' ', sizeof(in_report_file_path));
+    const char *report_file_path_cstr = (*env)->GetStringUTFChars(env, report_file_path, 0);
+
+    size_t len = strlen(report_file_path_cstr);
+    if (len > sizeof(in_report_file_path)) {
+        len = sizeof(in_report_file_path);
+    }
+    memcpy(in_report_file_path, report_file_path_cstr, len);
 
     TipOutputRecord output;
     // Call COBOL function
@@ -32,5 +41,6 @@ Java_ca_rmen_tipcalculator_BridgeKt_handleTipRequest(JNIEnv *env,
     jdoubleArray out = (*env)->NewDoubleArray(env, 2);
     jdouble buf[2] = {output.total_tip, output.tip_per_customer};
     (*env)->SetDoubleArrayRegion(env, out, 0, 2, buf);
+    (*env)->ReleaseStringUTFChars(env, report_file_path, report_file_path_cstr);
     return out;
 }
