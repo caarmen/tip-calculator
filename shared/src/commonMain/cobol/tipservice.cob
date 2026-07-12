@@ -25,9 +25,9 @@
                in-tip-input
                out-tip-output
 
-           call static 'generate-tip-report' using
-               in-tip-input
-               in-report-file-path
-               out-tip-output
+           *> call static 'generate-tip-report' using
+           *>    in-tip-input
+           *>    in-report-file-path
+           *>    out-tip-output
        .
        end program handle-tip-request.
