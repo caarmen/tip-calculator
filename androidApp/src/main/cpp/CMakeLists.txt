@@ -49,6 +49,7 @@ find_package(gnucobol-android REQUIRED CONFIG)
 set_target_properties(gnucobol-android::cob PROPERTIES IMPORTED_SONAME "libcob.so")
 get_target_property(LIBCOB_INCLUDE_DIRS gnucobol-android::cob INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../../../shared/src/commonMain/cpp/"
         ${LIBCOB_INCLUDE_DIRS}
         ${CMAKE_CURRENT_BINARY_DIR}
 )

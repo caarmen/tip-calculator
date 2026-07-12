@@ -1,2 +1,2 @@
-headers = ExposeToKotlin.h
+headers = TipCalculatorBridge.h
 package = ca.rmen.tipcalculator

@@ -20,7 +20,7 @@ kotlin {
             cinterops {
                 val tipCalculator by creating {
                     compilerOpts(
-                        "-I${project.rootDir}/shared/src/iosMain/cpp"
+                        "-I${project.rootDir}/shared/src/commonMain/cpp"
                     )
                 }
             }

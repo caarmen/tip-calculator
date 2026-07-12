@@ -1,5 +1,4 @@
 #pragma once
-
 typedef struct {
     double amount_with_tax;   // comp-2  -> 8 bytes
     double tax_amount;        // comp-2  -> 8 bytes
@@ -18,6 +17,7 @@ typedef struct {
 
 extern int handle__tip__request(
         TipInputRecord *in_tip_input,
-        char           *in_report_file_path,   // 100-byte, space-padded, NOT null-terminated
+        const char           *in_report_file_path,   // 100-byte, space-padded, NOT null-terminated
         TipOutputRecord *out_tip_output
 );
+
