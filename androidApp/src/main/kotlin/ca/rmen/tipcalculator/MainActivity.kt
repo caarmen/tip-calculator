@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        System.loadLibrary("tipcalculator")
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
