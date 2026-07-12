@@ -21,11 +21,11 @@
            out-tip-output
            .
 
-           call 'calculate-tip' using
+           call static 'calculate-tip' using
                in-tip-input
                out-tip-output
 
-           call 'generate-tip-report' using
+           call static 'generate-tip-report' using
                in-tip-input
                in-report-file-path
                out-tip-output
