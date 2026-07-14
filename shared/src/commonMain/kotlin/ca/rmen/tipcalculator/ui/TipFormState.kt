@@ -2,6 +2,7 @@ package ca.rmen.tipcalculator.ui
 
 import androidx.compose.runtime.saveable.SaverScope
 import ca.rmen.tipcalculator.domain.ServiceLevel
+import ca.rmen.tipcalculator.domain.TipInput
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -12,8 +13,20 @@ data class TipFormState(
     val serviceLevel: ServiceLevel,
     val numberCustomer: String,
 ) {
-    val canSubmit: Boolean
+    val isValid: Boolean
         get() = amountWithTax.isNotBlank() && taxAmount.isNotBlank() && numberCustomer.isNotBlank()
+
+    fun toTipInputOrNull() : TipInput? {
+        if (isValid) {
+            return TipInput(
+                amountWithTax = amountWithTax.toDouble(),
+                taxAmount = taxAmount.toDouble(),
+                serviceLevel = serviceLevel,
+                numberCustomer = numberCustomer.toInt(),
+            )
+        }
+        return null
+    }
 
     companion object {
         val Saver = object : androidx.compose.runtime.saveable.Saver<TipFormState, Any> {

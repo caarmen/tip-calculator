@@ -95,7 +95,7 @@ fun TipForm(
                 softwareKeyboardController?.hide()
                 onCalculateClick()
             },
-            enabled = tipFormState.canSubmit,
+            enabled = tipFormState.isValid,
         ) {
             Text(stringResource(Res.string.button_calculate))
         }

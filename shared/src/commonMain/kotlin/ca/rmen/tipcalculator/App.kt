@@ -24,7 +24,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
-import ca.rmen.tipcalculator.domain.TipInput
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
 
@@ -57,14 +56,9 @@ fun App(
                     tipFormState = newState
                 },
                 onCalculateClick = {
-                    viewModel.calculateTip(
-                        TipInput(
-                            amountWithTax = tipFormState.amountWithTax.toDouble(),
-                            taxAmount = tipFormState.taxAmount.toDouble(),
-                            serviceLevel = tipFormState.serviceLevel,
-                            numberCustomer = tipFormState.numberCustomer.toInt(),
-                        )
-                    )
+                    tipFormState.toTipInputOrNull()?.let {
+                        viewModel.calculateTip(it)
+                    }
                 },
             )
             Column(
