@@ -103,22 +103,3 @@ fun TipForm(
 }
 
 
-private fun String.isMoney(): Boolean {
-    if (isBlank()) return true
-    try {
-        toDouble()
-        return true
-    } catch (_: NumberFormatException) {
-        return false
-    }
-}
-
-private fun String.isInt(): Boolean {
-    if (isBlank()) return true
-    try {
-        toInt()
-        return true
-    } catch (_: NumberFormatException) {
-        return false
-    }
-}
