@@ -1,6 +1,6 @@
 package ca.rmen.tipcalculator
 
-import androidx.compose.foundation.Image
+import tipcalculator.shared.generated.resources.Res
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,9 +35,11 @@ import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipInput
-import org.jetbrains.compose.resources.painterResource
-import tipcalculator.shared.generated.resources.Res
-import tipcalculator.shared.generated.resources.compose_multiplatform
+import org.jetbrains.compose.resources.stringResource
+import tipcalculator.shared.generated.resources.button_calculate
+import tipcalculator.shared.generated.resources.label_amount_with_tax
+import tipcalculator.shared.generated.resources.label_number_customers
+import tipcalculator.shared.generated.resources.label_tax
 
 @Composable
 fun App(
@@ -50,7 +52,6 @@ fun App(
         val taxAmountState = rememberTextFieldState()
         var serviceLevelState by remember { mutableStateOf(ServiceLevel.GOOD) }
         val numberCustomerState = rememberTextFieldState()
-        val tipCalculations by viewModel.tipCalculations.collectAsState()
         val tipReportContent by viewModel.tipReportContent.collectAsState()
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
@@ -60,12 +61,12 @@ fun App(
             TextField(
                 state = amountWithTaxState,
                 inputTransformation = doubleTransformation,
-                label = { Text("Bill amount (incl tax)") },
+                label = { Text(stringResource(Res.string.label_amount_with_tax)) },
             )
             TextField(
                 state = taxAmountState,
                 inputTransformation = doubleTransformation,
-                label = { Text("Tax") },
+                label = { Text(stringResource(Res.string.label_tax)) },
             )
             ServiceLevel.entries.forEach { serviceLevel ->
                 Row(
@@ -90,7 +91,7 @@ fun App(
             TextField(
                 state = numberCustomerState,
                 inputTransformation = intTransformation,
-                label = { Text("Number of customers") },
+                label = { Text(stringResource(Res.string.label_number_customers)) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                 )
@@ -107,7 +108,7 @@ fun App(
                     )
                 )
             }) {
-                Text("Click me!")
+                Text(stringResource(Res.string.button_calculate))
             }
             Column(
                 modifier = Modifier.fillMaxWidth(),
