@@ -21,7 +21,10 @@ external fun generateTipReport(
     serviceLevel: Int,
     numberCustomer: Int,
     reportFilePath: String,
+    totalWithTip: Double,
     totalTip: Double,
     tipPerPerson: Double,
+    pretaxAmount: Double,
+    tipPercentage: Double,
 )
 

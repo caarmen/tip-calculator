@@ -26,8 +26,11 @@ actual fun generateTipReport(
 
         // --- outputs: allocate native vars to receive results ---
         val output = alloc<TipOutputRecord>().apply {
+            total_with_tip = tipCalculations.totalWithTip
             total_tip = tipCalculations.totalTip
             tip_per_customer = tipCalculations.tipPerPerson
+            pretax_amount = tipCalculations.pretaxAmount
+            tip_percentage = tipCalculations.tipPercentage
         }
 
         generate__tip__report(

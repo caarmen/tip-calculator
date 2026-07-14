@@ -18,8 +18,12 @@ import tipcalculator.shared.generated.resources.label_result_total_tip
 @Composable
 fun TipResultUi(
     tipCalculations: TipCalculations = TipCalculations(
+        totalWithTip = 120.0,
         totalTip = 20.0,
         tipPerPerson = 10.0,
+        pretaxAmount = 92.0,
+        tipPercentage = 20.0,
+
     ),
     modifier: Modifier = Modifier
 ) {

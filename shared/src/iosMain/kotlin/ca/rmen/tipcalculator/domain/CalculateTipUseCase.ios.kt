@@ -30,8 +30,11 @@ actual fun calculateTip(
             out_tip_output = output.ptr,
         )
         TipCalculations(
+            totalWithTip = output.total_with_tip,
             totalTip = output.total_tip,
             tipPerPerson = output.tip_per_customer,
+            pretaxAmount = output.pretax_amount,
+            tipPercentage = output.tip_percentage,
         )
     }
 }

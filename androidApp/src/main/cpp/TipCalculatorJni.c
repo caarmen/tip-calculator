@@ -37,10 +37,16 @@ Java_ca_rmen_tipcalculator_BridgeKt_handleTipRequest(JNIEnv *env,
             &output
     );
 
-    // Return the double values we're interested in
-    jdoubleArray out = (*env)->NewDoubleArray(env, 2);
-    jdouble buf[2] = {output.total_tip, output.tip_per_customer};
-    (*env)->SetDoubleArrayRegion(env, out, 0, 2, buf);
+    // Return the result as an array of doubles
+    jdoubleArray out = (*env)->NewDoubleArray(env, 5);
+    jdouble buf[5] = {
+            output.total_with_tip,
+            output.total_tip,
+            output.tip_per_customer,
+            output.pretax_amount,
+            output.tip_percentage,
+    };
+    (*env)->SetDoubleArrayRegion(env, out, 0, 5, buf);
     (*env)->ReleaseStringUTFChars(env, report_file_path, report_file_path_cstr);
     return out;
 }
@@ -60,15 +66,25 @@ Java_ca_rmen_tipcalculator_BridgeKt_calculateTip(JNIEnv *env, jclass clazz, jdou
             &output
     );
 
-    // Return the double values we're interested in
-    jdoubleArray out = (*env)->NewDoubleArray(env, 2);
-    jdouble buf[2] = {output.total_tip, output.tip_per_customer};
-    (*env)->SetDoubleArrayRegion(env, out, 0, 2, buf);
+    // Return the result as an array of doubles
+    jdoubleArray out = (*env)->NewDoubleArray(env, 5);
+    jdouble buf[5] = {
+            output.total_with_tip,
+            output.total_tip,
+            output.tip_per_customer,
+            output.pretax_amount,
+            output.tip_percentage,
+    };
+    (*env)->SetDoubleArrayRegion(env, out, 0, 5, buf);
     return out;
 }
 
 JNIEXPORT void JNICALL
-Java_ca_rmen_tipcalculator_BridgeKt_generateTipReport(JNIEnv *env, jclass clazz, jdouble amount_with_tax, jdouble tax_amount, jint service_level, jint number_customer, jstring report_file_path, jdouble total_tip, jdouble tip_per_person) {
+Java_ca_rmen_tipcalculator_BridgeKt_generateTipReport(
+        JNIEnv *env, jclass clazz,
+        jdouble amount_with_tax, jdouble tax_amount, jint service_level, jint number_customer,
+        jstring report_file_path,
+        jdouble total_with_tip, jdouble total_tip, jdouble tip_per_person, jdouble pre_tax_amount, jdouble tip_percentage) {
     TipInputRecord input;
     input.amount_with_tax = amount_with_tax;
     input.tax_amount = tax_amount;
@@ -86,8 +102,11 @@ Java_ca_rmen_tipcalculator_BridgeKt_generateTipReport(JNIEnv *env, jclass clazz,
     memcpy(in_report_file_path, report_file_path_cstr, len);
 
     TipOutputRecord output;
+    output.total_with_tip = total_with_tip;
     output.total_tip = total_tip;
     output.tip_per_customer = tip_per_person;
+    output.tip_per_customer = tip_per_person;
+    output.tip_percentage = tip_per_person;
     // Call COBOL function
     generate__tip__report(
             &input,

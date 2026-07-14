@@ -11,7 +11,10 @@ actual fun generateTipReport(
         tipInput.serviceLevel.value,
         tipInput.numberCustomer,
         reportPath,
+        tipCalculations.totalWithTip,
         tipCalculations.totalTip,
         tipCalculations.tipPerPerson,
+        tipCalculations.pretaxAmount,
+        tipCalculations.tipPercentage,
     )
 }

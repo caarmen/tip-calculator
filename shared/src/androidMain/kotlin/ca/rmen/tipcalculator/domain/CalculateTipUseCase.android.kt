@@ -10,7 +10,10 @@ actual fun calculateTip(
         tipInput.numberCustomer,
     )
     return TipCalculations(
-        totalTip = result[0],
-        tipPerPerson = result[1],
+        totalWithTip = result[0],
+        totalTip = result[1],
+        tipPerPerson = result[2],
+        pretaxAmount = result[3],
+        tipPercentage = result[4],
     )
 }
