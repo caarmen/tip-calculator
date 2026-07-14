@@ -40,9 +40,10 @@ class TipCalculatorViewModel(
                 tipReportContent.value = emptyList()
                 val linesBuffer = mutableListOf<String>()
                 val lines = readUtf8().split("\n")
+                val columnCount = lines[0].length
                 lines.forEach {
                     delay(timeEmitOneReportLine)
-                    linesBuffer.add(it)
+                    linesBuffer.add(it.padEnd(columnCount, ' '))
                     tipReportContent.value = linesBuffer.toList()
                 }
             }
