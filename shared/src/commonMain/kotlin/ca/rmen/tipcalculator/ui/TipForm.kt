@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -52,23 +53,6 @@ fun TipForm(
     onCalculateClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    val textFieldColors = TextFieldDefaults.colors(
-        focusedContainerColor = formBackgroundColor,
-        unfocusedContainerColor = formBackgroundColor,
-        disabledContainerColor = formBackgroundColor,
-
-        focusedTextColor = formTextColor,
-        unfocusedTextColor = formTextColor,
-
-        cursorColor = formTextColor,
-
-        focusedIndicatorColor = formTextColor,
-        unfocusedIndicatorColor = formTextColor,
-
-        focusedLabelColor = formTextColor,
-        unfocusedLabelColor = formTextColor,
-    )
-    val textFieldStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
     val radioButtonColors = RadioButtonDefaults.colors(
         selectedColor = formTextColor
     )
@@ -78,60 +62,20 @@ fun TipForm(
         modifier = modifier.background(formBackgroundColor).padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.height(56.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(stringResource(Res.string.label_amount_with_tax), color = formTextColor)
-
-            }
-            TextField(
-                value = tipFormState.amountWithTax,
-                onValueChange = { newValue ->
-                    onStateChange(tipFormState.updateAmountWithTax(newValue))
-                },
-                colors = textFieldColors,
-                modifier = Modifier.weight(1f),
-                textStyle = textFieldStyle,
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.height(56.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(stringResource(Res.string.label_tax), color = formTextColor)
-            }
-            TextField(
-                value = tipFormState.taxAmount,
-                onValueChange = { newValue ->
-                    onStateChange(tipFormState.updateTaxAmount(newValue))
-                },
-                colors = textFieldColors,
-                modifier = Modifier.weight(1f),
-                textStyle = textFieldStyle,
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+        LabeledTextField(
+            label = stringResource(Res.string.label_amount_with_tax),
+            value = tipFormState.amountWithTax,
+            onValueChange = { onStateChange(tipFormState.updateAmountWithTax(it)) },
+        )
+        LabeledTextField(
+            label = stringResource(Res.string.label_tax),
+            value = tipFormState.taxAmount,
+            onValueChange = { onStateChange(tipFormState.updateTaxAmount(it)) },
+        )
+        LabeledRow(
+            label = stringResource(Res.string.label_service_level),
             modifier = Modifier.wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart,
-            ) {
-                Text(stringResource(Res.string.label_service_level), color = formTextColor)
-            }
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.SpaceBetween
@@ -158,30 +102,12 @@ fun TipForm(
                 }
             }
         }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.height(56.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(stringResource(Res.string.label_number_customers), color = formTextColor)
-            }
-            TextField(
-                value = tipFormState.numberCustomer,
-                onValueChange = { newValue ->
-                    onStateChange(tipFormState.updateNumberCustomer(newValue))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                ),
-                colors = textFieldColors,
-                modifier = Modifier.weight(1f),
-                textStyle = textFieldStyle,
-            )
-        }
+        LabeledTextField(
+            label = stringResource(Res.string.label_number_customers),
+            value = tipFormState.numberCustomer,
+            onValueChange = { onStateChange(tipFormState.updateNumberCustomer(it)) },
+            keyboardType = KeyboardType.Number,
+        )
         Button(
             onClick = {
                 softwareKeyboardController?.hide()
@@ -206,5 +132,60 @@ fun TipForm(
     }
 }
 
+@Composable
+private fun LabeledRow(
+    label: String,
+    modifier: Modifier = Modifier.height(56.dp),
+    content: @Composable () -> Unit,
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+            Text(label, color = formTextColor)
+        }
+        Box(modifier = Modifier.weight(1f)) {
+            content()
+        }
+    }
+}
 
+@Composable
+private fun LabeledTextField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text,
+) {
+    LabeledRow(label) {
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = formBackgroundColor,
+                unfocusedContainerColor = formBackgroundColor,
+                disabledContainerColor = formBackgroundColor,
+
+                focusedTextColor = formTextColor,
+                unfocusedTextColor = formTextColor,
+
+                cursorColor = formTextColor,
+
+                focusedIndicatorColor = formTextColor,
+                unfocusedIndicatorColor = formTextColor,
+
+                focusedLabelColor = formTextColor,
+                unfocusedLabelColor = formTextColor,
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
+        )
+    }
+}
 
