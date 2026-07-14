@@ -11,10 +11,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.SaverScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,21 +29,29 @@ import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipInput
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
+import kotlinx.serialization.json.Json
 
 @Composable
 fun App(
     viewModelFactory: ViewModelProvider.Factory = previewViewModelFactory,
 ) {
     val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
-    var amountWithTax by remember { mutableStateOf("") }
-    var taxAmount by remember { mutableStateOf("") }
-    var serviceLevel by remember { mutableStateOf(ServiceLevel.GOOD) }
-    var numberCustomer by remember { mutableStateOf("") }
+    var tipFormState by rememberSaveable(stateSaver = object: Saver<TipFormState, Any> {
+        override fun SaverScope.save(value: TipFormState): String = Json.encodeToString(value)
 
-    val canSubmit by remember {
-        derivedStateOf {
-            amountWithTax.isNotBlank() && taxAmount.isNotBlank() and numberCustomer.isNotBlank()
+        override fun restore(value: Any): TipFormState? {
+            return Json.decodeFromString(value as String)
         }
+
+    }) {
+        mutableStateOf(
+            TipFormState(
+                amountWithTax = "",
+                taxAmount = "",
+                serviceLevel = ServiceLevel.GOOD,
+                numberCustomer = "2",
+            )
+        )
     }
 
     MaterialTheme {
@@ -56,23 +65,17 @@ fun App(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TipForm(
-                tipFormState = TipFormState(
-                    amountWithTax = amountWithTax,
-                    taxAmount = taxAmount,
-                    serviceLevel = serviceLevel,
-                    numberCustomer = numberCustomer,
-                ),
-                onAmountWithTaxChange = { amountWithTax = it },
-                onTaxAmountChange = { taxAmount = it },
-                onServiceLevelChange = { serviceLevel = it },
-                onNumberCustomerChange = { numberCustomer = it },
+                tipFormState = tipFormState,
+                onStateChange = { newState ->
+                    tipFormState = newState
+                },
                 onCalculateClick = {
                     viewModel.calculateTip(
                         TipInput(
-                            amountWithTax = amountWithTax.toDouble(),
-                            taxAmount = taxAmount.toDouble(),
-                            serviceLevel = serviceLevel,
-                            numberCustomer = numberCustomer.toInt(),
+                            amountWithTax = tipFormState.amountWithTax.toDouble(),
+                            taxAmount = tipFormState.taxAmount.toDouble(),
+                            serviceLevel = tipFormState.serviceLevel,
+                            numberCustomer = tipFormState.numberCustomer.toInt(),
                         )
                     )
                 },

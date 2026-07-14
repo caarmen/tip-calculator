@@ -33,10 +33,7 @@ fun TipForm(
         serviceLevel = ServiceLevel.GOOD,
         numberCustomer = "2",
     ),
-    onAmountWithTaxChange: (String) -> Unit = {},
-    onTaxAmountChange: (String) -> Unit = {},
-    onServiceLevelChange: (ServiceLevel) -> Unit = {},
-    onNumberCustomerChange: (String) -> Unit = {},
+    onStateChange: (TipFormState) -> Unit = {},
     onCalculateClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -48,14 +45,18 @@ fun TipForm(
         TextField(
             value = tipFormState.amountWithTax,
             onValueChange = { newValue ->
-                notifier(tipFormState.amountWithTax, newValue, ::isMoney, onAmountWithTaxChange)
+                if (tipFormState.amountWithTax != newValue && newValue.isMoney()) {
+                    onStateChange(tipFormState.copy(amountWithTax = newValue))
+                }
             },
             label = { Text(stringResource(Res.string.label_amount_with_tax)) },
         )
         TextField(
             value = tipFormState.taxAmount,
             onValueChange = { newValue ->
-                notifier(tipFormState.taxAmount, newValue, ::isMoney, onTaxAmountChange)
+                if (tipFormState.taxAmount != newValue && newValue.isMoney()) {
+                    onStateChange(tipFormState.copy(taxAmount = newValue))
+                }
             },
             label = { Text(stringResource(Res.string.label_tax)) },
         )
@@ -65,7 +66,7 @@ fun TipForm(
                     .fillMaxWidth()
                     .selectable(
                         selected = tipFormState.serviceLevel == candidate,
-                        onClick = { onServiceLevelChange(candidate) },
+                        onClick = { onStateChange(tipFormState.copy(serviceLevel = candidate)) },
                         role = Role.RadioButton,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
@@ -80,7 +81,9 @@ fun TipForm(
         TextField(
             value = tipFormState.numberCustomer,
             onValueChange = { newValue ->
-                notifier(tipFormState.numberCustomer, newValue, ::isInt, onNumberCustomerChange)
+                if (tipFormState.numberCustomer != newValue && newValue.isMoney()) {
+                    onStateChange(tipFormState.copy(numberCustomer = newValue))
+                }
             },
             label = { Text(stringResource(Res.string.label_number_customers)) },
             keyboardOptions = KeyboardOptions(
@@ -99,31 +102,21 @@ fun TipForm(
     }
 }
 
-private fun notifier(
-    oldValue: String,
-    newValue: String,
-    filter: (String) -> Boolean,
-    callback: (String) -> Unit
-) {
-    if (oldValue != newValue && filter(newValue)) {
-        callback(newValue)
-    }
-}
 
-private fun isMoney(value: String): Boolean {
-    if (value.isBlank()) return true
+private fun String.isMoney(): Boolean {
+    if (isBlank()) return true
     try {
-        value.toDouble()
+        toDouble()
         return true
     } catch (_: NumberFormatException) {
         return false
     }
 }
 
-private fun isInt(value: String): Boolean {
-    if (value.isBlank()) return true
+private fun String.isInt(): Boolean {
+    if (isBlank()) return true
     try {
-        value.toInt()
+        toInt()
         return true
     } catch (_: NumberFormatException) {
         return false

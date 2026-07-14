@@ -1,7 +1,9 @@
 package ca.rmen.tipcalculator.ui
 
 import ca.rmen.tipcalculator.domain.ServiceLevel
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class TipFormState(
     val amountWithTax: String,
     val taxAmount: String,
