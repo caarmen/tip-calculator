@@ -32,6 +32,7 @@ import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.ui.ScaleToFitWidth
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
 import ca.rmen.tipcalculator.ui.TipReport
@@ -94,9 +95,7 @@ fun App(
                     sheetState = sheetState,
                 ) {
                     Column(modifier=Modifier.fillMaxHeight().verticalScroll(rememberScrollState())){
-                        Row(
-                            modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
-                        ) {
+                        ScaleToFitWidth(modifier=Modifier.fillMaxWidth()) {
                             TipReport(tipReportContent)
                         }
                     }
