@@ -19,7 +19,7 @@ actual fun calculateTip(
         val input = alloc<TipInputRecord>().apply {
             amount_with_tax = tipInput.amountWithTax
             tax_amount = tipInput.taxAmount
-            service_level = tipInput.serviceLevel
+            service_level = tipInput.serviceLevel.value
             number_customers = tipInput.numberCustomer
         }
 

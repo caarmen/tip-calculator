@@ -3,21 +3,28 @@ package ca.rmen.tipcalculator
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,6 +32,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
+import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipInput
 import org.jetbrains.compose.resources.painterResource
 import tipcalculator.shared.generated.resources.Res
@@ -38,7 +46,7 @@ fun App(
     MaterialTheme {
         val amountWithTaxState = rememberTextFieldState()
         val taxAmountState = rememberTextFieldState()
-        val serviceLevelState = rememberTextFieldState()
+        var serviceLevelState by remember { mutableStateOf(ServiceLevel.GOOD) }
         val numberCustomerState = rememberTextFieldState()
         val tipResult by viewModel.tipResult.collectAsState()
         Column(
@@ -62,6 +70,26 @@ fun App(
                     keyboardType = KeyboardType.Decimal,
                 )
             )
+            ServiceLevel.entries.forEach { serviceLevel ->
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .selectable(
+                            selected = serviceLevelState == serviceLevel,
+                            onClick = {
+                                serviceLevelState = serviceLevel
+                            },
+                            role = Role.RadioButton
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(
+                        selected = serviceLevelState == serviceLevel,
+                        onClick = null // Row handles click
+                    )
+                    Text(serviceLevel.name)
+                }
+
+            }
             TextField(
                 state = numberCustomerState,
                 inputTransformation = intTransformation,
@@ -70,12 +98,13 @@ fun App(
                     keyboardType = KeyboardType.Number,
                 )
             )
+
             Button(onClick = {
                 viewModel.calculateTip(
                     TipInput(
                         amountWithTax = amountWithTaxState.text.toString().toDouble(),
                         taxAmount = taxAmountState.text.toString().toDouble(),
-                        serviceLevel = 0,
+                        serviceLevel = serviceLevelState,
                         numberCustomer = numberCustomerState.text.toString().toInt(),
                     )
                 )

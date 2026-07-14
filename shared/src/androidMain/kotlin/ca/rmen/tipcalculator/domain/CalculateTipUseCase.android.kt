@@ -9,7 +9,7 @@ actual fun calculateTip(
     val result: DoubleArray = handleTipRequest(
         tipInput.amountWithTax,
         tipInput.taxAmount,
-        tipInput.serviceLevel,
+        tipInput.serviceLevel.value,
         tipInput.numberCustomer,
         reportPath,
     )
