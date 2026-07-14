@@ -35,6 +35,7 @@ fun TipForm(
     onServiceLevelChange: (ServiceLevel) -> Unit = {},
     numberCustomer: String = "2",
     onNumberCustomerChange: (String) -> Unit = {},
+    canSubmit: Boolean = true,
     onCalculateClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -90,6 +91,7 @@ fun TipForm(
                 softwareKeyboardController?.hide()
                 onCalculateClick()
             },
+            enabled = canSubmit,
         ) {
             Text(stringResource(Res.string.button_calculate))
         }

@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +38,12 @@ fun App(
     var serviceLevel by remember { mutableStateOf(ServiceLevel.GOOD) }
     var numberCustomer by remember { mutableStateOf("") }
 
+    val canSubmit by remember {
+        derivedStateOf {
+            amountWithTax.isNotBlank() && taxAmount.isNotBlank() and numberCustomer.isNotBlank()
+        }
+    }
+
     MaterialTheme {
         val tipReportContent by viewModel.tipReportContent.collectAsState()
         Column(
@@ -56,6 +63,7 @@ fun App(
                 onServiceLevelChange = { serviceLevel = it },
                 numberCustomer = numberCustomer,
                 onNumberCustomerChange = { numberCustomer = it },
+                canSubmit = canSubmit,
                 onCalculateClick = {
                     viewModel.calculateTip(
                         TipInput(
