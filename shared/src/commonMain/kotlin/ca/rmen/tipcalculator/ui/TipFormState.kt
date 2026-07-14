@@ -15,6 +15,7 @@ data class TipFormState(
 ) {
     val isValid: Boolean
         get() = amountWithTax.isMoney() && taxAmount.isMoney() && numberCustomer.isInt()
+                && amountWithTax.isNotBlank() && taxAmount.isNotBlank() && numberCustomer.isNotBlank()
 
     fun updateAmountWithTax(newValue: String): TipFormState =
         if (newValue != amountWithTax && newValue.isMoney()) {
