@@ -2,15 +2,18 @@ package ca.rmen.tipcalculator.domain
 
 import ca.rmen.tipcalculator.handleTipRequest
 
-actual fun calculateTip(tipInput: TipInput): TipResult {
+actual fun calculateTip(
+    tipInput: TipInput,
+    reportPath: String,
+): TipCalculations {
     val result: DoubleArray = handleTipRequest(
         tipInput.amountWithTax,
         tipInput.taxAmount,
-        tipInput.serviceLevel,
+        tipInput.serviceLevel.value,
         tipInput.numberCustomer,
-        "", // TODO path
+        reportPath,
     )
-    return TipResult(
+    return TipCalculations(
         totalTip = result[0],
         tipPerPerson = result[1],
     )

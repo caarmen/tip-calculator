@@ -1,65 +1,100 @@
 package ca.rmen.tipcalculator
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.SaverScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ca.rmen.gnucobol.kmp.GnuCOBOL
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.ReportPathProvider
+import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipInput
-import org.jetbrains.compose.resources.painterResource
-
-import tipcalculator.shared.generated.resources.Res
-import tipcalculator.shared.generated.resources.compose_multiplatform
+import ca.rmen.tipcalculator.ui.TipForm
+import ca.rmen.tipcalculator.ui.TipFormState
+import kotlinx.serialization.json.Json
 
 @Composable
-@Preview
-fun App() {
-    remember {
-        // This just tests all the wiring from the common compose code
-        // down to COBOL.
-        // TODO move this into a viewmodel/usecase...
-        GnuCOBOL.initialize()
-        val tipResult = CalculateTipUseCase(TipInput(
-            amountWithTax = 100.0,
-            taxAmount = 8.0,
-            serviceLevel = 0,
-            numberCustomer = 2,
-        )).invoke()
-        println("CARM tipResult $tipResult")
+fun App(
+    viewModelFactory: ViewModelProvider.Factory = previewViewModelFactory,
+) {
+    val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
+    var tipFormState by rememberSaveable(stateSaver = object: Saver<TipFormState, Any> {
+        override fun SaverScope.save(value: TipFormState): String = Json.encodeToString(value)
+
+        override fun restore(value: Any): TipFormState? {
+            return Json.decodeFromString(value as String)
+        }
+
+    }) {
+        mutableStateOf(
+            TipFormState(
+                amountWithTax = "",
+                taxAmount = "",
+                serviceLevel = ServiceLevel.GOOD,
+                numberCustomer = "2",
+            )
+        )
     }
+
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        val tipReportContent by viewModel.tipReportContent.collectAsState()
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
                 .safeContentPadding()
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
+            TipForm(
+                tipFormState = tipFormState,
+                onStateChange = { newState ->
+                    tipFormState = newState
+                },
+                onCalculateClick = {
+                    viewModel.calculateTip(
+                        TipInput(
+                            amountWithTax = tipFormState.amountWithTax.toDouble(),
+                            taxAmount = tipFormState.taxAmount.toDouble(),
+                            serviceLevel = tipFormState.serviceLevel,
+                            numberCustomer = tipFormState.numberCustomer.toInt(),
+                        )
+                    )
+                },
+            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(tipReportContent)
             }
         }
+    }
+}
+
+val previewViewModelFactory = viewModelFactory {
+    initializer {
+        TipCalculatorViewModel(useCase = CalculateTipUseCase(reportPathProvider = object :
+            ReportPathProvider {
+            override fun reportPath(filename: String) = "/tmp/report.txt"
+        }))
     }
 }

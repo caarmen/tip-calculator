@@ -6,6 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import ca.rmen.tipcalculator.domain.AndroidReportPathProvider
+import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +18,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            App(
+                viewModelFactory = viewModelFactory {
+                    initializer {
+                        TipCalculatorViewModel(
+                            useCase = CalculateTipUseCase(
+                                AndroidReportPathProvider(this@MainActivity)
+                            )
+                        )
+                    }
+                }
+            )
         }
     }
 }
