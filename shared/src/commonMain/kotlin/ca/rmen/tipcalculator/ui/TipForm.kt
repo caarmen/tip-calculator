@@ -45,14 +45,14 @@ fun TipForm(
         TextField(
             value = tipFormState.amountWithTax,
             onValueChange = { newValue ->
-                tipFormState.updateAmountWithTax(newValue)?.let(onStateChange)
+                onStateChange(tipFormState.updateAmountWithTax(newValue))
             },
             label = { Text(stringResource(Res.string.label_amount_with_tax)) },
         )
         TextField(
             value = tipFormState.taxAmount,
             onValueChange = { newValue ->
-                tipFormState.updateTaxAmount(newValue)?.let(onStateChange)
+                onStateChange(tipFormState.updateTaxAmount(newValue))
             },
             label = { Text(stringResource(Res.string.label_tax)) },
         )
@@ -63,7 +63,7 @@ fun TipForm(
                     .selectable(
                         selected = tipFormState.serviceLevel == candidate,
                         onClick = {
-                            tipFormState.updateServiceLevel(candidate)?.let(onStateChange)
+                            onStateChange(tipFormState.updateServiceLevel(candidate))
                         },
                         role = Role.RadioButton,
                     ),
@@ -79,7 +79,7 @@ fun TipForm(
         TextField(
             value = tipFormState.numberCustomer,
             onValueChange = { newValue ->
-                tipFormState.updateNumberCustomer(newValue)?.let(onStateChange)
+                onStateChange(tipFormState.updateNumberCustomer(newValue))
             },
             label = { Text(stringResource(Res.string.label_number_customers)) },
             keyboardOptions = KeyboardOptions(
