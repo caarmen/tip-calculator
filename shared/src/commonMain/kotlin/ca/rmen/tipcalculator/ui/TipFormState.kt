@@ -16,7 +16,27 @@ data class TipFormState(
     val isValid: Boolean
         get() = amountWithTax.isMoney() && taxAmount.isMoney() && numberCustomer.isInt()
 
-    fun toTipInputOrNull() : TipInput? {
+    fun updateAmountWithTax(newValue: String): TipFormState? =
+        if (newValue != amountWithTax && newValue.isMoney()) {
+            copy(amountWithTax = newValue)
+        } else null
+
+    fun updateTaxAmount(newValue: String): TipFormState? =
+        if (newValue != taxAmount && newValue.isMoney()) {
+            copy(taxAmount = newValue)
+        } else null
+
+    fun updateServiceLevel(newValue: ServiceLevel): TipFormState? =
+        if (newValue != serviceLevel) {
+            copy(serviceLevel = newValue)
+        } else null
+
+    fun updateNumberCustomer(newValue: String): TipFormState? =
+        if (newValue != numberCustomer && newValue.isInt()) {
+            copy(numberCustomer = newValue)
+        } else null
+
+    fun toTipInputOrNull(): TipInput? {
         if (isValid) {
             return TipInput(
                 amountWithTax = amountWithTax.toDouble(),

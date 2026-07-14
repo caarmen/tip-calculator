@@ -45,18 +45,14 @@ fun TipForm(
         TextField(
             value = tipFormState.amountWithTax,
             onValueChange = { newValue ->
-                if (tipFormState.amountWithTax != newValue && newValue.isMoney()) {
-                    onStateChange(tipFormState.copy(amountWithTax = newValue))
-                }
+                tipFormState.updateAmountWithTax(newValue)?.let(onStateChange)
             },
             label = { Text(stringResource(Res.string.label_amount_with_tax)) },
         )
         TextField(
             value = tipFormState.taxAmount,
             onValueChange = { newValue ->
-                if (tipFormState.taxAmount != newValue && newValue.isMoney()) {
-                    onStateChange(tipFormState.copy(taxAmount = newValue))
-                }
+                tipFormState.updateTaxAmount(newValue)?.let(onStateChange)
             },
             label = { Text(stringResource(Res.string.label_tax)) },
         )
@@ -66,7 +62,9 @@ fun TipForm(
                     .fillMaxWidth()
                     .selectable(
                         selected = tipFormState.serviceLevel == candidate,
-                        onClick = { onStateChange(tipFormState.copy(serviceLevel = candidate)) },
+                        onClick = {
+                            tipFormState.updateServiceLevel(candidate)?.let(onStateChange)
+                        },
                         role = Role.RadioButton,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
@@ -81,9 +79,7 @@ fun TipForm(
         TextField(
             value = tipFormState.numberCustomer,
             onValueChange = { newValue ->
-                if (tipFormState.numberCustomer != newValue && newValue.isInt()) {
-                    onStateChange(tipFormState.copy(numberCustomer = newValue))
-                }
+                tipFormState.updateNumberCustomer(newValue)?.let(onStateChange)
             },
             label = { Text(stringResource(Res.string.label_number_customers)) },
             keyboardOptions = KeyboardOptions(
