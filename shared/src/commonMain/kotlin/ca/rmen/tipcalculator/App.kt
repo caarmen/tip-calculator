@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.ViewModelProvider
@@ -43,6 +44,7 @@ fun App(
     viewModelFactory: ViewModelProvider.Factory = previewViewModelFactory,
 ) {
     val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
+    val softwareKeyboardController = LocalSoftwareKeyboardController.current
     MaterialTheme {
         val amountWithTaxState = rememberTextFieldState()
         val taxAmountState = rememberTextFieldState()
@@ -100,6 +102,7 @@ fun App(
             )
 
             Button(onClick = {
+                softwareKeyboardController?.hide()
                 viewModel.calculateTip(
                     TipInput(
                         amountWithTax = amountWithTaxState.text.toString().toDouble(),
