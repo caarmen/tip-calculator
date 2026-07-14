@@ -39,13 +39,14 @@ fun App(
         GnuCOBOL.initialize()
         val tipResult = CalculateTipUseCase(
             reportPathProvider,
+        ).invoke(
             TipInput(
                 amountWithTax = 100.0,
                 taxAmount = 8.0,
                 serviceLevel = 0,
                 numberCustomer = 2,
             )
-        ).invoke()
+        )
         println("CARM tipResult $tipResult")
     }
     MaterialTheme {
