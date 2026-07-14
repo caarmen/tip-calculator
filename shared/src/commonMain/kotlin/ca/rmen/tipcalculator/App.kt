@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,10 +32,10 @@ fun App(
     viewModelFactory: ViewModelProvider.Factory = previewViewModelFactory,
 ) {
     val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
-    val amountWithTaxState = rememberTextFieldState()
-    val taxAmountState = rememberTextFieldState()
+    var amountWithTax by remember { mutableStateOf("") }
+    var taxAmount by remember { mutableStateOf("") }
     var serviceLevel by remember { mutableStateOf(ServiceLevel.GOOD) }
-    val numberCustomerState = rememberTextFieldState()
+    var numberCustomer by remember { mutableStateOf("") }
 
     MaterialTheme {
         val tipReportContent by viewModel.tipReportContent.collectAsState()
@@ -49,18 +48,21 @@ fun App(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TipForm(
-                amountWithTaxState = amountWithTaxState,
-                taxAmountState = taxAmountState,
+                amountWithTax = amountWithTax,
+                onAmountWithTaxChange = { amountWithTax = it },
+                taxAmount = taxAmount,
+                onTaxAmountChange = { taxAmount = it },
                 serviceLevel = serviceLevel,
                 onServiceLevelChange = { serviceLevel = it },
-                numberCustomerState = numberCustomerState,
+                numberCustomer = numberCustomer,
+                onNumberCustomerChange = { numberCustomer = it },
                 onCalculateClick = {
                     viewModel.calculateTip(
                         TipInput(
-                            amountWithTax = amountWithTaxState.text.toString().toDouble(),
-                            taxAmount = taxAmountState.text.toString().toDouble(),
+                            amountWithTax = amountWithTax.toDouble(),
+                            taxAmount = taxAmount.toDouble(),
                             serviceLevel = serviceLevel,
-                            numberCustomer = numberCustomerState.text.toString().toInt(),
+                            numberCustomer = numberCustomer.toInt(),
                         )
                     )
                 },

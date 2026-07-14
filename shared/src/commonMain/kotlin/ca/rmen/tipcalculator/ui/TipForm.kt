@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -27,11 +25,14 @@ import tipcalculator.shared.generated.resources.label_tax
 
 @Composable
 fun TipForm(
-    amountWithTaxState: TextFieldState,
-    taxAmountState: TextFieldState,
+    amountWithTax: String,
+    onAmountWithTaxChange: (String) -> Unit,
+    taxAmount: String,
+    onTaxAmountChange: (String) -> Unit,
     serviceLevel: ServiceLevel,
     onServiceLevelChange: (ServiceLevel) -> Unit,
-    numberCustomerState: TextFieldState,
+    numberCustomer: String,
+    onNumberCustomerChange: (String) -> Unit,
     onCalculateClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -41,13 +42,17 @@ fun TipForm(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TextField(
-            state = amountWithTaxState,
-            inputTransformation = doubleTransformation,
+            value = amountWithTax,
+            onValueChange = { newValue ->
+                notifier(amountWithTax, newValue, ::isMoney, onAmountWithTaxChange)
+            },
             label = { Text(stringResource(Res.string.label_amount_with_tax)) },
         )
         TextField(
-            state = taxAmountState,
-            inputTransformation = doubleTransformation,
+            value = taxAmount,
+            onValueChange = { newValue ->
+                notifier(taxAmount, newValue, ::isMoney, onTaxAmountChange)
+            },
             label = { Text(stringResource(Res.string.label_tax)) },
         )
         ServiceLevel.entries.forEach { candidate ->
@@ -69,8 +74,10 @@ fun TipForm(
             }
         }
         TextField(
-            state = numberCustomerState,
-            inputTransformation = intTransformation,
+            value = numberCustomer,
+            onValueChange = { newValue ->
+                notifier(taxAmount, newValue, ::isInt, onNumberCustomerChange)
+            },
             label = { Text(stringResource(Res.string.label_number_customers)) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -85,18 +92,33 @@ fun TipForm(
     }
 }
 
-private val doubleTransformation = InputTransformation {
-    try {
-        asCharSequence().toString().toDouble()
-    } catch (_: NumberFormatException) {
-        revertAllChanges()
+private fun notifier(
+    oldValue: String,
+    newValue: String,
+    filter: (String) -> Boolean,
+    callback: (String) -> Unit
+) {
+    if (oldValue != newValue && filter(newValue)) {
+        callback(newValue)
     }
 }
 
-private val intTransformation = InputTransformation {
+private fun isMoney(value: String): Boolean {
+    if (value.isBlank()) return true
     try {
-        asCharSequence().toString().toInt()
+        value.toDouble()
+        return true
     } catch (_: NumberFormatException) {
-        revertAllChanges()
+        return false
+    }
+}
+
+private fun isInt(value: String): Boolean {
+    if (value.isBlank()) return true
+    try {
+        value.toInt()
+        return true
+    } catch (_: NumberFormatException) {
+        return false
     }
 }
