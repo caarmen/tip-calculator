@@ -10,45 +10,30 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ca.rmen.gnucobol.kmp.GnuCOBOL
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.TipInput
 import org.jetbrains.compose.resources.painterResource
-
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.compose_multiplatform
 
 @Composable
-@Preview
 fun App(
-    reportPathProvider: ReportPathProvider = object : ReportPathProvider {
-        override fun reportPath(filename: String): String {
-            return "/tmp/report.txt"
-        }
-    }
+    viewModelFactory: ViewModelProvider.Factory = previewViewModelFactory,
 ) {
-    remember {
-        // This just tests all the wiring from the common compose code
-        // down to COBOL.
-        // TODO move this into a viewmodel/usecase...
-        GnuCOBOL.initialize()
-        val tipResult = CalculateTipUseCase(
-            reportPathProvider,
-        ).invoke(
-            TipInput(
-                amountWithTax = 100.0,
-                taxAmount = 8.0,
-                serviceLevel = 0,
-                numberCustomer = 2,
-            )
-        )
-        println("CARM tipResult $tipResult")
-    }
+    val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
@@ -58,7 +43,18 @@ fun App(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = { showContent = !showContent }) {
+            val tipResult by viewModel.tipResult.collectAsState()
+            Button(onClick = {
+                showContent = !showContent
+                viewModel.calculateTip(
+                    TipInput(
+                        amountWithTax = 100.0,
+                        taxAmount = 8.0,
+                        serviceLevel = 0,
+                        numberCustomer = 2,
+                    )
+                )
+            }) {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
@@ -68,9 +64,21 @@ fun App(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+                    Text("Compose: $tipResult")
                 }
             }
         }
+    }
+}
+
+val previewViewModelFactory = viewModelFactory {
+    initializer {
+        TipCalculatorViewModel(
+            useCase = CalculateTipUseCase(
+                reportPathProvider = object : ReportPathProvider {
+                    override fun reportPath(filename: String) = "/tmp/report.txt"
+                }
+            )
+        )
     }
 }
