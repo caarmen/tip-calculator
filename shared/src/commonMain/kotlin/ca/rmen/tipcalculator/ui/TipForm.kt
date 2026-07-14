@@ -7,25 +7,17 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
-import ca.rmen.tipcalculator.TipCalculatorViewModel
 import ca.rmen.tipcalculator.domain.ServiceLevel
-import ca.rmen.tipcalculator.domain.TipInput
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.button_calculate
@@ -35,14 +27,15 @@ import tipcalculator.shared.generated.resources.label_tax
 
 @Composable
 fun TipForm(
-    viewModel: TipCalculatorViewModel,
+    amountWithTaxState: TextFieldState,
+    taxAmountState: TextFieldState,
+    serviceLevel: ServiceLevel,
+    onServiceLevelChange: (ServiceLevel) -> Unit,
+    numberCustomerState: TextFieldState,
+    onCalculateClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
-    val amountWithTaxState = rememberTextFieldState()
-    val taxAmountState = rememberTextFieldState()
-    var serviceLevelState by remember { mutableStateOf(ServiceLevel.GOOD) }
-    val numberCustomerState = rememberTextFieldState()
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,25 +50,23 @@ fun TipForm(
             inputTransformation = doubleTransformation,
             label = { Text(stringResource(Res.string.label_tax)) },
         )
-        ServiceLevel.entries.forEach { serviceLevel ->
+        ServiceLevel.entries.forEach { candidate ->
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .selectable(
-                        selected = serviceLevelState == serviceLevel,
-                        onClick = {
-                            serviceLevelState = serviceLevel
-                        },
-                        role = Role.RadioButton
+                        selected = serviceLevel == candidate,
+                        onClick = { onServiceLevelChange(candidate) },
+                        role = Role.RadioButton,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RadioButton(
-                    selected = serviceLevelState == serviceLevel,
-                    onClick = null // Row handles click
+                    selected = serviceLevel == candidate,
+                    onClick = null,
                 )
-                Text(serviceLevel.name)
+                Text(candidate.name)
             }
-
         }
         TextField(
             state = numberCustomerState,
@@ -87,14 +78,7 @@ fun TipForm(
         )
         Button(onClick = {
             softwareKeyboardController?.hide()
-            viewModel.calculateTip(
-                TipInput(
-                    amountWithTax = amountWithTaxState.text.toString().toDouble(),
-                    taxAmount = taxAmountState.text.toString().toDouble(),
-                    serviceLevel = serviceLevelState,
-                    numberCustomer = numberCustomerState.text.toString().toInt(),
-                )
-            )
+            onCalculateClick()
         }) {
             Text(stringResource(Res.string.button_calculate))
         }
@@ -116,4 +100,3 @@ private val intTransformation = InputTransformation {
         revertAllChanges()
     }
 }
-
