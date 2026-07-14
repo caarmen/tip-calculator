@@ -13,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,21 +27,13 @@ import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipInput
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
-import kotlinx.serialization.json.Json
 
 @Composable
 fun App(
     viewModelFactory: ViewModelProvider.Factory = previewViewModelFactory,
 ) {
     val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
-    var tipFormState by rememberSaveable(stateSaver = object: Saver<TipFormState, Any> {
-        override fun SaverScope.save(value: TipFormState): String = Json.encodeToString(value)
-
-        override fun restore(value: Any): TipFormState? {
-            return Json.decodeFromString(value as String)
-        }
-
-    }) {
+    var tipFormState by rememberSaveable(stateSaver = TipFormState.Saver) {
         mutableStateOf(
             TipFormState(
                 amountWithTax = "",
@@ -57,11 +47,8 @@ fun App(
     MaterialTheme {
         val tipReportContent by viewModel.tipReportContent.collectAsState()
         Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
+                .safeContentPadding().fillMaxSize().verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TipForm(
