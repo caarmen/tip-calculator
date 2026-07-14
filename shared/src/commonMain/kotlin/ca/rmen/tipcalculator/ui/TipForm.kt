@@ -27,15 +27,16 @@ import tipcalculator.shared.generated.resources.label_tax
 @Preview
 @Composable
 fun TipForm(
-    amountWithTax: String = "100.0",
+    tipFormState: TipFormState = TipFormState(
+        amountWithTax = "100.0",
+        taxAmount = "8.0",
+        serviceLevel = ServiceLevel.GOOD,
+        numberCustomer = "2",
+    ),
     onAmountWithTaxChange: (String) -> Unit = {},
-    taxAmount: String = "8.0",
     onTaxAmountChange: (String) -> Unit = {},
-    serviceLevel: ServiceLevel = ServiceLevel.GOOD,
     onServiceLevelChange: (ServiceLevel) -> Unit = {},
-    numberCustomer: String = "2",
     onNumberCustomerChange: (String) -> Unit = {},
-    canSubmit: Boolean = true,
     onCalculateClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -45,16 +46,16 @@ fun TipForm(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TextField(
-            value = amountWithTax,
+            value = tipFormState.amountWithTax,
             onValueChange = { newValue ->
-                notifier(amountWithTax, newValue, ::isMoney, onAmountWithTaxChange)
+                notifier(tipFormState.amountWithTax, newValue, ::isMoney, onAmountWithTaxChange)
             },
             label = { Text(stringResource(Res.string.label_amount_with_tax)) },
         )
         TextField(
-            value = taxAmount,
+            value = tipFormState.taxAmount,
             onValueChange = { newValue ->
-                notifier(taxAmount, newValue, ::isMoney, onTaxAmountChange)
+                notifier(tipFormState.taxAmount, newValue, ::isMoney, onTaxAmountChange)
             },
             label = { Text(stringResource(Res.string.label_tax)) },
         )
@@ -63,23 +64,23 @@ fun TipForm(
                 modifier = Modifier
                     .fillMaxWidth()
                     .selectable(
-                        selected = serviceLevel == candidate,
+                        selected = tipFormState.serviceLevel == candidate,
                         onClick = { onServiceLevelChange(candidate) },
                         role = Role.RadioButton,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RadioButton(
-                    selected = serviceLevel == candidate,
+                    selected = tipFormState.serviceLevel == candidate,
                     onClick = null,
                 )
                 Text(candidate.name)
             }
         }
         TextField(
-            value = numberCustomer,
+            value = tipFormState.numberCustomer,
             onValueChange = { newValue ->
-                notifier(taxAmount, newValue, ::isInt, onNumberCustomerChange)
+                notifier(tipFormState.numberCustomer, newValue, ::isInt, onNumberCustomerChange)
             },
             label = { Text(stringResource(Res.string.label_number_customers)) },
             keyboardOptions = KeyboardOptions(
@@ -91,7 +92,7 @@ fun TipForm(
                 softwareKeyboardController?.hide()
                 onCalculateClick()
             },
-            enabled = canSubmit,
+            enabled = tipFormState.canSubmit,
         ) {
             Text(stringResource(Res.string.button_calculate))
         }

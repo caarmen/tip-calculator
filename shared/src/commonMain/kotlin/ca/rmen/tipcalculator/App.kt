@@ -27,6 +27,7 @@ import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipInput
 import ca.rmen.tipcalculator.ui.TipForm
+import ca.rmen.tipcalculator.ui.TipFormState
 
 @Composable
 fun App(
@@ -55,15 +56,16 @@ fun App(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TipForm(
-                amountWithTax = amountWithTax,
+                tipFormState = TipFormState(
+                    amountWithTax = amountWithTax,
+                    taxAmount = taxAmount,
+                    serviceLevel = serviceLevel,
+                    numberCustomer = numberCustomer,
+                ),
                 onAmountWithTaxChange = { amountWithTax = it },
-                taxAmount = taxAmount,
                 onTaxAmountChange = { taxAmount = it },
-                serviceLevel = serviceLevel,
                 onServiceLevelChange = { serviceLevel = it },
-                numberCustomer = numberCustomer,
                 onNumberCustomerChange = { numberCustomer = it },
-                canSubmit = canSubmit,
                 onCalculateClick = {
                     viewModel.calculateTip(
                         TipInput(
