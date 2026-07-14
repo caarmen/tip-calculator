@@ -2,5 +2,6 @@
     <string name="label_amount_with_tax">Bill amount (incl tax)</string>
     <string name="label_tax">Tax</string>
     <string name="label_number_customers">Number of customers</string>
+    <string name="label_service_level">Service</string>
     <string name="button_calculate">Calculate</string>
 </resources>

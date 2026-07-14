@@ -28,6 +28,7 @@ import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
 import ca.rmen.tipcalculator.ui.TipReport
+import ca.rmen.tipcalculator.ui.formBackgroundColor
 
 @Composable
 fun App(
@@ -49,6 +50,7 @@ fun App(
         val tipReportContent: List<String> by viewModel.tipReportContent.collectAsState()
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
+                .background(formBackgroundColor)
                 .safeContentPadding().fillMaxSize().verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
