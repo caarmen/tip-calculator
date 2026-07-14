@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,10 +26,15 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
+import ca.rmen.tipcalculator.ui.LabeledRow
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
 import ca.rmen.tipcalculator.ui.TipReport
+import ca.rmen.tipcalculator.ui.TipResultUi
 import ca.rmen.tipcalculator.ui.formBackgroundColor
+import org.jetbrains.compose.resources.stringResource
+import tipcalculator.shared.generated.resources.Res
+import tipcalculator.shared.generated.resources.label_result_total_tip
 
 @Composable
 fun App(
@@ -59,12 +65,15 @@ fun App(
                 onStateChange = { newState ->
                     tipFormState = newState
                 },
-                onCalculateClick = {
+                onClickCalculate = {
                     tipFormState.toTipInputOrNull()?.let {
                         viewModel.calculateTip(it)
                     }
                 },
             )
+            viewModel.tipCalculations.value?.let {
+                TipResultUi(tipCalculations = it)
+            }
             Row(modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
                 TipReport(tipReportContent)
             }

@@ -3,5 +3,8 @@
     <string name="label_tax">Tax</string>
     <string name="label_number_customers">Number of customers</string>
     <string name="label_service_level">Service</string>
+    <string name="label_result_total_tip">Total tip</string>
+    <string name="label_result_tip_per_person">Tip per person</string>
     <string name="button_calculate">Calculate</string>
+    <string name="button_print_receipt">Print receipt</string>
 </resources>
