@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
@@ -23,17 +24,18 @@ import tipcalculator.shared.generated.resources.label_amount_with_tax
 import tipcalculator.shared.generated.resources.label_number_customers
 import tipcalculator.shared.generated.resources.label_tax
 
+@Preview
 @Composable
 fun TipForm(
-    amountWithTax: String,
-    onAmountWithTaxChange: (String) -> Unit,
-    taxAmount: String,
-    onTaxAmountChange: (String) -> Unit,
-    serviceLevel: ServiceLevel,
-    onServiceLevelChange: (ServiceLevel) -> Unit,
-    numberCustomer: String,
-    onNumberCustomerChange: (String) -> Unit,
-    onCalculateClick: () -> Unit,
+    amountWithTax: String = "100.0",
+    onAmountWithTaxChange: (String) -> Unit = {},
+    taxAmount: String = "8.0",
+    onTaxAmountChange: (String) -> Unit = {},
+    serviceLevel: ServiceLevel = ServiceLevel.GOOD,
+    onServiceLevelChange: (ServiceLevel) -> Unit = {},
+    numberCustomer: String = "2",
+    onNumberCustomerChange: (String) -> Unit = {},
+    onCalculateClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
@@ -83,10 +85,12 @@ fun TipForm(
                 keyboardType = KeyboardType.Number,
             )
         )
-        Button(onClick = {
-            softwareKeyboardController?.hide()
-            onCalculateClick()
-        }) {
+        Button(
+            onClick = {
+                softwareKeyboardController?.hide()
+                onCalculateClick()
+            },
+        ) {
             Text(stringResource(Res.string.button_calculate))
         }
     }
