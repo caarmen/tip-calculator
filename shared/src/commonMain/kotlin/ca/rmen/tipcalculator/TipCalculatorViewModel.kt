@@ -7,23 +7,17 @@ import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.TipCalculations
 import ca.rmen.tipcalculator.domain.TipInput
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.SYSTEM
-import kotlin.time.Duration.Companion.milliseconds
 
 class TipCalculatorViewModel(
     private val calculateUseCase: CalculateTipUseCase,
     private val printUseCase: PrintReceiptUseCase,
 ) : ViewModel() {
-
-    companion object {
-        val timeEmitOneReportLine = 500.milliseconds
-    }
 
     init {
         GnuCOBOL.initialize()
@@ -42,17 +36,14 @@ class TipCalculatorViewModel(
     fun printReceipt(tipInput: TipInput) {
         calculateTip(tipInput)
         tipCalculations.value?.let {
+            tipReportContent.value = listOf()
             val reportPath = printUseCase.invoke(tipInput, it)
             viewModelScope.launch {
                 FileSystem.SYSTEM.read(reportPath.toPath()) {
-                    tipReportContent.value = emptyList()
-                    val linesBuffer = mutableListOf<String>()
                     val lines = readUtf8().split("\n")
                     val columnCount = lines[0].length
-                    lines.forEach {
-                        delay(timeEmitOneReportLine)
-                        linesBuffer.add(it.padEnd(columnCount, ' '))
-                        tipReportContent.value = linesBuffer.toList()
+                    tipReportContent.value = lines.map { line ->
+                        line.padEnd(columnCount, ' ')
                     }
                 }
             }

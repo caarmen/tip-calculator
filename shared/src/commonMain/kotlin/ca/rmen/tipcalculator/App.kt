@@ -4,16 +4,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,6 +57,7 @@ fun App(
     MaterialTheme {
         val tipReportContent: List<String> by viewModel.tipReportContent.collectAsState()
         val tipCalculations: TipCalculations? by viewModel.tipCalculations.collectAsState()
+        var showReport by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
@@ -72,14 +78,29 @@ fun App(
                 onClickPrintReceipt = {
                     tipFormState.toTipInputOrNull()?.let {
                         viewModel.printReceipt(it)
+                        showReport = true
                     }
                 }
             )
             tipCalculations?.let {
                 TipResultUi(tipCalculations = it)
             }
-            Row(modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
-                TipReport(tipReportContent)
+            if (showReport && tipReportContent.isNotEmpty()) {
+                @OptIn(ExperimentalMaterial3Api::class) val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+                @OptIn(ExperimentalMaterial3Api::class)
+                ModalBottomSheet(
+                    onDismissRequest = { showReport = false },
+                    sheetState = sheetState,
+                ) {
+                    Column(modifier=Modifier.fillMaxHeight().verticalScroll(rememberScrollState())){
+                        Row(
+                            modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                        ) {
+                            TipReport(tipReportContent)
+                        }
+                    }
+                }
             }
         }
     }
