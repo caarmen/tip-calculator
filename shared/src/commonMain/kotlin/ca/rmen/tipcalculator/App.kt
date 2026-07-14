@@ -1,23 +1,24 @@
 package ca.rmen.tipcalculator
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -35,50 +36,86 @@ fun App(
 ) {
     val viewModel: TipCalculatorViewModel = viewModel(factory = viewModelFactory)
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        val amountWithTaxState = rememberTextFieldState()
+        val taxAmountState = rememberTextFieldState()
+        val serviceLevelState = rememberTextFieldState()
+        val numberCustomerState = rememberTextFieldState()
+        val tipResult by viewModel.tipResult.collectAsState()
         Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
+            modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
+                .safeContentPadding().fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val tipResult by viewModel.tipResult.collectAsState()
+            TextField(
+                state = amountWithTaxState,
+                inputTransformation = doubleTransformation,
+                label = { Text("Bill amount (incl tax)") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                ),
+            )
+            TextField(
+                state = taxAmountState,
+                inputTransformation = doubleTransformation,
+                label = { Text("Tax") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                )
+            )
+            TextField(
+                state = numberCustomerState,
+                inputTransformation = intTransformation,
+                label = { Text("Number of customers") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                )
+            )
             Button(onClick = {
-                showContent = !showContent
                 viewModel.calculateTip(
                     TipInput(
-                        amountWithTax = 100.0,
-                        taxAmount = 8.0,
+                        amountWithTax = amountWithTaxState.text.toString().toDouble(),
+                        taxAmount = taxAmountState.text.toString().toDouble(),
                         serviceLevel = 0,
-                        numberCustomer = 2,
+                        numberCustomer = numberCustomerState.text.toString().toInt(),
                     )
                 )
             }) {
                 Text("Click me!")
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $tipResult")
-                }
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Image(painterResource(Res.drawable.compose_multiplatform), null)
+                Text("Compose: $tipResult")
             }
         }
     }
 }
 
+
+private val doubleTransformation = InputTransformation {
+    try {
+        asCharSequence().toString().toDouble()
+    } catch (_: NumberFormatException) {
+        revertAllChanges()
+    }
+}
+
+private val intTransformation = InputTransformation {
+    try {
+        asCharSequence().toString().toInt()
+    } catch (_: NumberFormatException) {
+        revertAllChanges()
+    }
+}
+
+
 val previewViewModelFactory = viewModelFactory {
     initializer {
-        TipCalculatorViewModel(
-            useCase = CalculateTipUseCase(
-                reportPathProvider = object : ReportPathProvider {
-                    override fun reportPath(filename: String) = "/tmp/report.txt"
-                }
-            )
-        )
+        TipCalculatorViewModel(useCase = CalculateTipUseCase(reportPathProvider = object :
+            ReportPathProvider {
+            override fun reportPath(filename: String) = "/tmp/report.txt"
+        }))
     }
 }
