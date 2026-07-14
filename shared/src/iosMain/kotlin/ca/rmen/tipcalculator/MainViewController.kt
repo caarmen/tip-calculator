@@ -1,6 +1,10 @@
 package ca.rmen.tipcalculator
 
 import androidx.compose.ui.window.ComposeUIViewController
-import ca.rmen.tipcalculator.domain.IosReportPathProvider
+import dev.zacsweers.metro.createGraph
+import platform.UIKit.UIViewController
 
-fun MainViewController() = ComposeUIViewController { App(IosReportPathProvider()) }
+fun MainViewController(): UIViewController {
+    val graph = createGraph<IosAppGraph>()
+    return ComposeUIViewController { App(graph.calculateTipUseCase) }
+}

@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import ca.rmen.tipcalculator.domain.AndroidReportPathProvider
+import dev.zacsweers.metro.createGraphFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,8 +14,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        val graph = createGraphFactory<AndroidAppGraph.Factory>().create(this)
+
         setContent {
-            App(AndroidReportPathProvider(this))
+            App(graph.calculateTipUseCase)
         }
     }
 }
@@ -23,5 +25,5 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    App(previewCalculateTipUseCase())
 }
