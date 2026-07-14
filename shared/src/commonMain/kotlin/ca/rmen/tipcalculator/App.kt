@@ -3,7 +3,6 @@ package ca.rmen.tipcalculator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -44,7 +43,7 @@ fun App(
     }
 
     MaterialTheme {
-        val tipReportContent by viewModel.tipReportContent.collectAsState()
+        val tipReportContent: List<String> by viewModel.tipReportContent.collectAsState()
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
                 .safeContentPadding().fillMaxSize().verticalScroll(rememberScrollState()),
@@ -61,11 +60,8 @@ fun App(
                     }
                 },
             )
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(tipReportContent)
+            tipReportContent.forEach { line ->
+                Text(line)
             }
         }
     }
