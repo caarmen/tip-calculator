@@ -81,7 +81,7 @@ fun TipForm(
         TextField(
             value = tipFormState.numberCustomer,
             onValueChange = { newValue ->
-                if (tipFormState.numberCustomer != newValue && newValue.isMoney()) {
+                if (tipFormState.numberCustomer != newValue && newValue.isInt()) {
                     onStateChange(tipFormState.copy(numberCustomer = newValue))
                 }
             },
