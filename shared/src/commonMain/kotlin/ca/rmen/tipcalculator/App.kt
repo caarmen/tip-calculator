@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,17 +23,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
-import ca.rmen.tipcalculator.ui.LabeledRow
+import ca.rmen.tipcalculator.domain.TipCalculations
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
 import ca.rmen.tipcalculator.ui.TipReport
 import ca.rmen.tipcalculator.ui.TipResultUi
 import ca.rmen.tipcalculator.ui.formBackgroundColor
-import org.jetbrains.compose.resources.stringResource
-import tipcalculator.shared.generated.resources.Res
-import tipcalculator.shared.generated.resources.label_result_total_tip
 
 @Composable
 fun App(
@@ -54,6 +51,8 @@ fun App(
 
     MaterialTheme {
         val tipReportContent: List<String> by viewModel.tipReportContent.collectAsState()
+        val tipCalculations: TipCalculations? by viewModel.tipCalculations.collectAsState()
+
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
                 .background(formBackgroundColor)
@@ -70,8 +69,13 @@ fun App(
                         viewModel.calculateTip(it)
                     }
                 },
+                onClickPrintReceipt = {
+                    tipFormState.toTipInputOrNull()?.let {
+                        viewModel.printReceipt(it)
+                    }
+                }
             )
-            viewModel.tipCalculations.value?.let {
+            tipCalculations?.let {
                 TipResultUi(tipCalculations = it)
             }
             Row(modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
@@ -83,9 +87,13 @@ fun App(
 
 val previewViewModelFactory = viewModelFactory {
     initializer {
-        TipCalculatorViewModel(useCase = CalculateTipUseCase(reportPathProvider = object :
-            ReportPathProvider {
-            override fun reportPath(filename: String) = "/tmp/report.txt"
-        }))
+        TipCalculatorViewModel(
+            calculateUseCase = CalculateTipUseCase(),
+            printUseCase = PrintReceiptUseCase(reportPathProvider = object :
+                ReportPathProvider {
+                override fun reportPath(filename: String) = "/tmp/report.txt"
+            }
+            )
+        )
     }
 }

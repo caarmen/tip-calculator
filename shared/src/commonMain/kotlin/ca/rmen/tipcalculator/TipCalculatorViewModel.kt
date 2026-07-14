@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.rmen.gnucobol.kmp.GnuCOBOL
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
-import ca.rmen.tipcalculator.domain.TipInput
+import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.domain.TipInput
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,12 +17,14 @@ import okio.SYSTEM
 import kotlin.time.Duration.Companion.milliseconds
 
 class TipCalculatorViewModel(
-    private val useCase: CalculateTipUseCase,
+    private val calculateUseCase: CalculateTipUseCase,
+    private val printUseCase: PrintReceiptUseCase,
 ) : ViewModel() {
 
     companion object {
         val timeEmitOneReportLine = 500.milliseconds
     }
+
     init {
         GnuCOBOL.initialize()
     }
@@ -33,18 +36,24 @@ class TipCalculatorViewModel(
         field: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
 
     fun calculateTip(tipInput: TipInput) {
-        val tipResult = useCase.invoke(tipInput)
-        tipCalculations.value = tipResult.tipCalculations
-        viewModelScope.launch {
-            FileSystem.SYSTEM.read(tipResult.reportPath.toPath()) {
-                tipReportContent.value = emptyList()
-                val linesBuffer = mutableListOf<String>()
-                val lines = readUtf8().split("\n")
-                val columnCount = lines[0].length
-                lines.forEach {
-                    delay(timeEmitOneReportLine)
-                    linesBuffer.add(it.padEnd(columnCount, ' '))
-                    tipReportContent.value = linesBuffer.toList()
+        tipCalculations.value = calculateUseCase.invoke(tipInput)
+    }
+
+    fun printReceipt(tipInput: TipInput) {
+        calculateTip(tipInput)
+        tipCalculations.value?.let {
+            val reportPath = printUseCase.invoke(tipInput, it)
+            viewModelScope.launch {
+                FileSystem.SYSTEM.read(reportPath.toPath()) {
+                    tipReportContent.value = emptyList()
+                    val linesBuffer = mutableListOf<String>()
+                    val lines = readUtf8().split("\n")
+                    val columnCount = lines[0].length
+                    lines.forEach {
+                        delay(timeEmitOneReportLine)
+                        linesBuffer.add(it.padEnd(columnCount, ' '))
+                        tipReportContent.value = linesBuffer.toList()
+                    }
                 }
             }
         }

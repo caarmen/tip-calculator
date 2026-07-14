@@ -21,3 +21,13 @@ extern int handle__tip__request(
         TipOutputRecord *out_tip_output
 );
 
+extern int calculate__tip(
+        TipInputRecord *in_tip_input,
+        TipOutputRecord *out_tip_output
+);
+
+extern int generate__tip__report(
+        TipInputRecord *in_tip_input,
+        const char           *in_report_file_path,   // 100-byte, space-padded, NOT null-terminated
+        TipOutputRecord *out_tip_output
+);

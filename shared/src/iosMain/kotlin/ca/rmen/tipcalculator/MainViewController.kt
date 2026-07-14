@@ -5,13 +5,15 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.IosReportPathProvider
+import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 
 fun MainViewController() = ComposeUIViewController {
     App(
         viewModelFactory = viewModelFactory {
             initializer {
                 TipCalculatorViewModel(
-                    useCase = CalculateTipUseCase(
+                    calculateUseCase = CalculateTipUseCase(),
+                    printUseCase = PrintReceiptUseCase(
                         IosReportPathProvider()
                     )
                 )
