@@ -60,17 +60,11 @@ fun App(
                 state = amountWithTaxState,
                 inputTransformation = doubleTransformation,
                 label = { Text("Bill amount (incl tax)") },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Decimal,
-                ),
             )
             TextField(
                 state = taxAmountState,
                 inputTransformation = doubleTransformation,
                 label = { Text("Tax") },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Decimal,
-                )
             )
             ServiceLevel.entries.forEach { serviceLevel ->
                 Row(
