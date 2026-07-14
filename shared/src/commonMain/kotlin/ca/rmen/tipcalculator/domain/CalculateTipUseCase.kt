@@ -5,12 +5,14 @@ class CalculateTipUseCase(
 ) {
     operator fun invoke(tipInput: TipInput): TipResult {
         val reportPath = reportPathProvider.reportPath("report.txt")
-        println("write report to $reportPath")
-        return calculateTip(tipInput, reportPath)
+        return TipResult(
+            calculateTip(tipInput, reportPath),
+            reportPath,
+        )
     }
 }
 
 expect fun calculateTip(
     tipInput: TipInput,
     reportPath: String,
-): TipResult
+): TipCalculations

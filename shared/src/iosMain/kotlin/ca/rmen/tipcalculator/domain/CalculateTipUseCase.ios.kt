@@ -11,7 +11,7 @@ import kotlinx.cinterop.ptr
 actual fun calculateTip(
     tipInput: TipInput,
     reportPath: String,
-): TipResult {
+): TipCalculations {
     @OptIn(ExperimentalForeignApi::class)
     return memScoped {
         // --- inputs: allocate native vars and set their values ---
@@ -31,11 +31,7 @@ actual fun calculateTip(
             in_report_file_path = reportPath,
             out_tip_output = output.ptr,
         )
-        println("result total tip: ${output.total_tip}, tip per customer: ${output.tip_per_customer}")
-        println("pretax: ${output.pretax_amount}, tip percentage ${output.tip_percentage}")
-        println("total with tip ${output.total_with_tip}")
-
-        TipResult(
+        TipCalculations(
             totalTip = output.total_tip,
             tipPerPerson = output.tip_per_customer,
         )

@@ -50,7 +50,8 @@ fun App(
         val taxAmountState = rememberTextFieldState()
         var serviceLevelState by remember { mutableStateOf(ServiceLevel.GOOD) }
         val numberCustomerState = rememberTextFieldState()
-        val tipResult by viewModel.tipResult.collectAsState()
+        val tipCalculations by viewModel.tipCalculations.collectAsState()
+        val tipReportContent by viewModel.tipReportContent.collectAsState()
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
                 .safeContentPadding().fillMaxSize(),
@@ -112,8 +113,7 @@ fun App(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Image(painterResource(Res.drawable.compose_multiplatform), null)
-                Text("Compose: $tipResult")
+                Text(tipReportContent)
             }
         }
     }

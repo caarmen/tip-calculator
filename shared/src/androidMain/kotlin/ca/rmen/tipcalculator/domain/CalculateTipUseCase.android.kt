@@ -5,7 +5,7 @@ import ca.rmen.tipcalculator.handleTipRequest
 actual fun calculateTip(
     tipInput: TipInput,
     reportPath: String,
-): TipResult {
+): TipCalculations {
     val result: DoubleArray = handleTipRequest(
         tipInput.amountWithTax,
         tipInput.taxAmount,
@@ -13,7 +13,7 @@ actual fun calculateTip(
         tipInput.numberCustomer,
         reportPath,
     )
-    return TipResult(
+    return TipCalculations(
         totalTip = result[0],
         tipPerPerson = result[1],
     )
