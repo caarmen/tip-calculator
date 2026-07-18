@@ -9,7 +9,9 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.ptr
+import org.koin.core.annotation.Factory
 
+@Factory
 class IosTipReporter : TipReporter {
     override fun generateTipReport(
         tipInput: TipInput,

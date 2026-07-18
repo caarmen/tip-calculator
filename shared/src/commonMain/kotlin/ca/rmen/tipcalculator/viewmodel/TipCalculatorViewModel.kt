@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.SYSTEM
+import org.koin.core.annotation.KoinViewModel
 
+@KoinViewModel
 class TipCalculatorViewModel(
     private val calculateUseCase: CalculateTipUseCase,
     private val printUseCase: PrintReceiptUseCase,
