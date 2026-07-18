@@ -9,7 +9,9 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
+import org.koin.core.annotation.Factory
 
+@Factory
 class IosTipCalculator : TipCalculator {
 
     override fun calculateTip(

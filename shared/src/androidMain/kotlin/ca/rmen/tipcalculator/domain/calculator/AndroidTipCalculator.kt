@@ -2,7 +2,9 @@ package ca.rmen.tipcalculator.domain.calculator
 
 import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.domain.model.TipInput
+import org.koin.core.annotation.Factory
 
+@Factory
 class AndroidTipCalculator : TipCalculator {
     override fun calculateTip(
         tipInput: TipInput,
