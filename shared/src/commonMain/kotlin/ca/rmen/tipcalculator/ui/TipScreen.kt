@@ -25,11 +25,17 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.TipCalculatorViewModel
-import ca.rmen.tipcalculator.domain.CalculateTipUseCase
-import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
-import ca.rmen.tipcalculator.domain.ReportPathProvider
-import ca.rmen.tipcalculator.domain.ServiceLevel
-import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
+import ca.rmen.tipcalculator.domain.reporter.ReportPathProvider
+import ca.rmen.tipcalculator.domain.model.ServiceLevel
+import ca.rmen.tipcalculator.domain.model.TipCalculations
+import ca.rmen.tipcalculator.domain.calculator.TipCalculator
+import ca.rmen.tipcalculator.domain.model.TipInput
+import ca.rmen.tipcalculator.domain.reporter.TipReporter
+import ca.rmen.tipcalculator.ui.components.ScaleToFitWidth
+import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
 
 @Composable
 fun TipScreen(
@@ -116,11 +122,28 @@ private fun PreviewTipScreen(
 val previewViewModelFactory = viewModelFactory {
     initializer {
         TipCalculatorViewModel(
-            calculateUseCase = CalculateTipUseCase(),
-            printUseCase = PrintReceiptUseCase(reportPathProvider = object :
-                ReportPathProvider {
-                override fun reportPath(filename: String) = "/tmp/report.txt"
-            }
+            calculateUseCase = CalculateTipUseCase(object : TipCalculator {
+                override fun calculateTip(tipInput: TipInput): TipCalculations = TipCalculations(
+                    totalTip = 20.0,
+                    tipPerPerson = 10.0,
+                    totalWithTip = 100.0,
+                    pretaxAmount = 92.0,
+                    tipPercentage = 20.0,
+                )
+            }),
+            printUseCase = PrintReceiptUseCase(
+                reportPathProvider = object :
+                    ReportPathProvider {
+                    override fun reportPath(filename: String) = "/tmp/report.txt"
+                },
+                tipReporter = object : TipReporter {
+                    override fun generateTipReport(
+                        tipInput: TipInput,
+                        reportPath: String,
+                        tipCalculations: TipCalculations
+                    ) {
+                    }
+                },
             )
         )
     }

@@ -1,4 +1,4 @@
-package ca.rmen.tipcalculator.domain
+package ca.rmen.tipcalculator.domain.reporter
 
 interface ReportPathProvider {
     /**

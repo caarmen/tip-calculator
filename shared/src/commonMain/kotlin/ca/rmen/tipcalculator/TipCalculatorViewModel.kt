@@ -3,10 +3,10 @@ package ca.rmen.tipcalculator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.rmen.gnucobol.kmp.GnuCOBOL
-import ca.rmen.tipcalculator.domain.CalculateTipUseCase
-import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
-import ca.rmen.tipcalculator.domain.TipCalculations
-import ca.rmen.tipcalculator.domain.TipInput
+import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
+import ca.rmen.tipcalculator.domain.model.TipCalculations
+import ca.rmen.tipcalculator.domain.model.TipInput
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -30,7 +30,9 @@ class TipCalculatorViewModel(
         field: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
 
     fun calculateTip(tipInput: TipInput) {
-        tipCalculations.value = calculateUseCase.invoke(tipInput)
+        viewModelScope.launch {
+            tipCalculations.value = calculateUseCase(tipInput)
+        }
     }
 
     fun resetCalculations() {
@@ -41,8 +43,8 @@ class TipCalculatorViewModel(
         calculateTip(tipInput)
         tipCalculations.value?.let {
             tipReportContent.value = listOf()
-            val reportPath = printUseCase.invoke(tipInput, it)
             viewModelScope.launch {
+                val reportPath = printUseCase(tipInput, it)
                 FileSystem.SYSTEM.read(reportPath.toPath()) {
                     val lines = readUtf8().split("\n")
                     val columnCount = lines[0].length

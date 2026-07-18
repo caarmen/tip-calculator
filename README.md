@@ -13,3 +13,6 @@ The report generation uses the Report Writer Control System ([RWCS](https://gnuc
 
 This project exists to provide a more interesting demo for the [GnuCOBOL port for Kotlin Multiplatform](https://github.com/caarmen/cobol-mobile) 
 than the demos in the [examples folder](https://github.com/caarmen/cobol-mobile/tree/main/examples) of that project.
+
+# How it works
+See [docs/architecture.md](docs/architecture.md)

@@ -1,4 +1,4 @@
-package ca.rmen.tipcalculator.ui
+package ca.rmen.tipcalculator.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.text.font.FontFamily

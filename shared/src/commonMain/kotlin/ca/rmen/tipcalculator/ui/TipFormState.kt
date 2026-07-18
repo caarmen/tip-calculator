@@ -1,8 +1,8 @@
 package ca.rmen.tipcalculator.ui
 
 import androidx.compose.runtime.saveable.SaverScope
-import ca.rmen.tipcalculator.domain.ServiceLevel
-import ca.rmen.tipcalculator.domain.TipInput
+import ca.rmen.tipcalculator.domain.model.ServiceLevel
+import ca.rmen.tipcalculator.domain.model.TipInput
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 

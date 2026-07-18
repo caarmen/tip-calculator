@@ -1,4 +1,4 @@
-package ca.rmen.tipcalculator.ui
+package ca.rmen.tipcalculator.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

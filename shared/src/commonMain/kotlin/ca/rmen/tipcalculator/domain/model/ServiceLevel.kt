@@ -1,4 +1,4 @@
-package ca.rmen.tipcalculator.domain
+package ca.rmen.tipcalculator.domain.model
 
 enum class ServiceLevel(val value: Int) {
     EXCELLENT(0),
