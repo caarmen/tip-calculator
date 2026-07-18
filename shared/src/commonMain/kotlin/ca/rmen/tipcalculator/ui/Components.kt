@@ -1,6 +1,7 @@
 package ca.rmen.tipcalculator.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -53,8 +55,9 @@ fun LabeledTextField(
     value: String,
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
+    modifier: Modifier = Modifier,
 ) {
-    LabeledRow(label) {
+    LabeledRow(label, modifier=modifier) {
         TextField(
             value = value,
             onValueChange = onValueChange,
@@ -81,6 +84,16 @@ fun LabeledTextField(
     }
 }
 
+@Preview
+@Composable
+private fun PreviewLabeledTextField() {
+    LabeledTextField(
+        label="some label",
+        value="123",
+        onValueChange = {},
+        modifier=Modifier.background(formBackgroundColor)
+    )
+}
 
 @Composable
 fun FormButton(
