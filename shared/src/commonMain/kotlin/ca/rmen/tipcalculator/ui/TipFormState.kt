@@ -14,11 +14,11 @@ data class TipFormState(
     val numberCustomer: String,
 ) {
     val isValid: Boolean
-        get() = amountWithTax.isMoney() && taxAmount.isMoney() && numberCustomer.isInt()
+        get() = amountWithTax.isPositiveMoney() && taxAmount.isMoney() && numberCustomer.isPositiveInt()
                 && amountWithTax.isNotBlank() && taxAmount.isNotBlank() && numberCustomer.isNotBlank()
 
     fun updateAmountWithTax(newValue: String): TipFormState =
-        if (newValue != amountWithTax && newValue.isMoney()) {
+        if (newValue != amountWithTax && newValue.isPositiveMoney()) {
             copy(amountWithTax = newValue)
         } else this
 
@@ -33,7 +33,7 @@ data class TipFormState(
         } else this
 
     fun updateNumberCustomer(newValue: String): TipFormState =
-        if (newValue != numberCustomer && newValue.isInt()) {
+        if (newValue != numberCustomer && newValue.isPositiveInt()) {
             copy(numberCustomer = newValue)
         } else this
 
