@@ -27,7 +27,6 @@ import tipcalculator.shared.generated.resources.label_number_customers
 import tipcalculator.shared.generated.resources.label_service_level
 import tipcalculator.shared.generated.resources.label_tax
 
-@Preview
 @Composable
 fun TipForm(
     tipFormState: TipFormState = TipFormState(
@@ -42,12 +41,14 @@ fun TipForm(
     modifier: Modifier = Modifier,
 ) {
     val radioButtonColors = RadioButtonDefaults.colors(
-        selectedColor = formTextColor
+        selectedColor = formInputTextColor
     )
 
     Column(
         modifier = modifier.background(formBackgroundColor).padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+
     ) {
         LabeledTextField(
             label = stringResource(Res.string.label_amount_with_tax),
@@ -78,13 +79,14 @@ fun TipForm(
                                 role = Role.RadioButton,
                             ).padding(vertical = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         RadioButton(
                             selected = tipFormState.serviceLevel == candidate,
                             onClick = null,
                             colors = radioButtonColors,
                         )
-                        Text(candidate.name, color = formTextColor)
+                        Text(candidate.name, color = formInputTextColor)
                     }
                 }
             }
@@ -105,15 +107,24 @@ fun TipForm(
                     onClickCalculate()
                 },
                 enabled = tipFormState.isValid,
-                label = stringResource(Res.string.button_calculate),
+                label = stringResource(Res.string.button_calculate).uppercase(),
             )
             FormButton(
                 onClick = {
                     onClickPrintReceipt()
                 },
                 enabled = tipFormState.isValid,
-                label = stringResource(Res.string.button_print_receipt),
+                label = stringResource(Res.string.button_print_receipt).uppercase(),
             )
         }
+    }
+}
+
+
+@Preview
+@Composable
+private fun PreviewTipForm() {
+    AppTheme {
+        TipForm()
     }
 }

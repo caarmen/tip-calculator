@@ -2,9 +2,9 @@ package ca.rmen.tipcalculator.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -21,31 +22,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun LabeledRow(
     label: String,
-    modifier: Modifier = Modifier.height(56.dp),
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+    Column(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier.weight(1f),
             contentAlignment = Alignment.CenterStart,
+            modifier = Modifier.padding(bottom = 8.dp)
         ) {
-            Text(label, color = formTextColor)
+            Text(label.uppercase(), color = formLabelTextColor)
         }
-        Box(modifier = Modifier.weight(1f)) {
+        Box {
             content()
         }
+        Text(
+            ".".repeat(200),
+            maxLines = 1,
+            overflow = TextOverflow.Clip,
+            color = formLabelTextColor,
+            modifier = Modifier.clearAndSetSemantics {}
+        )
     }
 }
 
@@ -57,8 +65,8 @@ fun LabeledTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier = Modifier,
 ) {
-    LabeledRow(label, modifier=modifier) {
-        TextField(
+    LabeledRow(label, modifier = modifier) {
+        OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
@@ -67,16 +75,16 @@ fun LabeledTextField(
                 unfocusedContainerColor = formBackgroundColor,
                 disabledContainerColor = formBackgroundColor,
 
-                focusedTextColor = formTextColor,
-                unfocusedTextColor = formTextColor,
+                focusedTextColor = formInputTextColor,
+                unfocusedTextColor = formInputTextColor,
 
-                cursorColor = formTextColor,
+                cursorColor = formInputTextColor,
 
-                focusedIndicatorColor = formTextColor,
-                unfocusedIndicatorColor = formTextColor,
+                focusedIndicatorColor = formLabelTextColor,
+                unfocusedIndicatorColor = formLabelTextColor,
 
-                focusedLabelColor = formTextColor,
-                unfocusedLabelColor = formTextColor,
+                focusedLabelColor = formInputTextColor,
+                unfocusedLabelColor = formInputTextColor,
             ),
             modifier = Modifier.fillMaxWidth(),
             textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
@@ -89,10 +97,10 @@ fun LabeledTextField(
 private fun PreviewLabeledTextField() {
     AppTheme {
         LabeledTextField(
-            label="some label",
-            value="123",
+            label = "some label",
+            value = "123",
             onValueChange = {},
-            modifier=Modifier.background(formBackgroundColor)
+            modifier = Modifier.background(formBackgroundColor)
         )
     }
 }
@@ -116,10 +124,10 @@ fun FormButton(
         ),
         colors = ButtonDefaults.buttonColors(
             containerColor = formBackgroundColor,
-            contentColor = formTextColor,
+            contentColor = formInputTextColor,
             disabledContentColor = formDisabledTextColor,
         ),
-        border = BorderStroke(1.dp, Color(0xFF00FF66)),
+        border = BorderStroke(1.dp, formLabelTextColor),
         modifier = Modifier.padding(16.dp),
 
         ) {

@@ -29,10 +29,10 @@ fun TipResultUi(
 ) {
     Column(modifier = modifier.padding(16.dp)) {
         LabeledRow(label = stringResource(Res.string.label_result_total_tip)) {
-            Text(text = tipCalculations.totalTip.toString(), color = formTextColor)
+            Text(text = tipCalculations.totalTip.toString(), color = formInputTextColor)
         }
         LabeledRow(label = stringResource(Res.string.label_result_tip_per_person)) {
-            Text(text = tipCalculations.tipPerPerson.toString(), color = formTextColor)
+            Text(text = tipCalculations.tipPerPerson.toString(), color = formInputTextColor)
         }
     }
 }
