@@ -62,7 +62,7 @@ fun TipScreen(
         }
         if (showReport && tipReportContent.isNotEmpty()) {
             @OptIn(ExperimentalMaterial3Api::class) val sheetState =
-                rememberModalBottomSheetState(skipPartiallyExpanded = true)
+                rememberModalBottomSheetState(skipPartiallyExpanded = false)
 
             @OptIn(ExperimentalMaterial3Api::class)
             ModalBottomSheet(
