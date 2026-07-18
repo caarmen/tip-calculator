@@ -41,7 +41,7 @@ fun TipForm(
     modifier: Modifier = Modifier,
 ) {
     val radioButtonColors = RadioButtonDefaults.colors(
-        selectedColor = formInputTextColor
+        selectedColor = formLabelTextColor
     )
 
     Column(
