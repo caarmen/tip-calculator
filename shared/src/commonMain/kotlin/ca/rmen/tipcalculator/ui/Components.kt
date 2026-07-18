@@ -47,14 +47,19 @@ fun LabeledRow(
         Box {
             content()
         }
-        Text(
-            ".".repeat(200),
-            maxLines = 1,
-            overflow = TextOverflow.Clip,
-            color = formLabelTextColor,
-            modifier = Modifier.clearAndSetSemantics {}
-        )
+        DottedDivider()
     }
+}
+
+@Composable
+fun DottedDivider(modifier: Modifier = Modifier) {
+    Text(
+        ".".repeat(200),
+        maxLines = 1,
+        overflow = TextOverflow.Clip,
+        color = formLabelTextColor,
+        modifier = modifier.clearAndSetSemantics {}
+    )
 }
 
 @Composable
