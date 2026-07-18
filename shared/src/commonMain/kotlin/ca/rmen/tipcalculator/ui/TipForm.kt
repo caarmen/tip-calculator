@@ -18,6 +18,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.rmen.tipcalculator.domain.ServiceLevel
+import ca.rmen.tipcalculator.ui.components.FormButton
+import ca.rmen.tipcalculator.ui.components.LabeledRow
+import ca.rmen.tipcalculator.ui.components.LabeledTextField
+import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
+import ca.rmen.tipcalculator.ui.theme.formInputTextColor
+import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.button_calculate

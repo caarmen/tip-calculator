@@ -13,6 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.ui.components.DottedDivider
+import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
+import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.label_result_tip_per_person

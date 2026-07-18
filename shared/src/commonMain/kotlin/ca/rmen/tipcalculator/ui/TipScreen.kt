@@ -30,6 +30,9 @@ import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.ui.components.ScaleToFitWidth
+import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
 
 @Composable
 fun TipScreen(
