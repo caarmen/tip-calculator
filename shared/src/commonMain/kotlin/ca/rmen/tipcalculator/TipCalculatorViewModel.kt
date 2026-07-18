@@ -30,7 +30,9 @@ class TipCalculatorViewModel(
         field: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
 
     fun calculateTip(tipInput: TipInput) {
-        tipCalculations.value = calculateUseCase.invoke(tipInput)
+        viewModelScope.launch {
+            tipCalculations.value = calculateUseCase(tipInput)
+        }
     }
 
     fun resetCalculations() {
