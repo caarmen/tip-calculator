@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import ca.rmen.tipcalculator.domain.AndroidReportPathProvider
-import ca.rmen.tipcalculator.domain.AndroidTipCalculator
-import ca.rmen.tipcalculator.domain.AndroidTipReporter
+import ca.rmen.tipcalculator.domain.calculator.AndroidTipCalculator
 import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.reporter.AndroidReportPathProvider
+import ca.rmen.tipcalculator.domain.reporter.AndroidTipReporter
 import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
 
 class MainActivity : ComponentActivity() {

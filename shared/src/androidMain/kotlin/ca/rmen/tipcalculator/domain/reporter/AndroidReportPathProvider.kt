@@ -1,7 +1,6 @@
-package ca.rmen.tipcalculator.domain
+package ca.rmen.tipcalculator.domain.reporter
 
 import android.content.Context
-import ca.rmen.tipcalculator.domain.reporter.ReportPathProvider
 import java.io.File
 
 class AndroidReportPathProvider(private val context: Context) : ReportPathProvider {

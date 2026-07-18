@@ -1,6 +1,5 @@
-package ca.rmen.tipcalculator.domain
+package ca.rmen.tipcalculator.domain.reporter
 
-import ca.rmen.tipcalculator.domain.reporter.ReportPathProvider
 import platform.Foundation.NSFileManager
 import platform.Foundation.temporaryDirectory
 
