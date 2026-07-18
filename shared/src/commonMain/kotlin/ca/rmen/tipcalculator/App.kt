@@ -40,6 +40,7 @@ fun App(
             tipCalculations = tipCalculations,
             onStateChange = { newState ->
                 tipFormState = newState
+                viewModel.resetCalculations()
             },
             onClickCalculate = {
                 tipFormState.toTipInputOrNull()?.let {

@@ -33,6 +33,10 @@ class TipCalculatorViewModel(
         tipCalculations.value = calculateUseCase.invoke(tipInput)
     }
 
+    fun resetCalculations() {
+        tipCalculations.value = null
+    }
+
     fun printReceipt(tipInput: TipInput) {
         calculateTip(tipInput)
         tipCalculations.value?.let {
