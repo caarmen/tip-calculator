@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.ui.components.DottedDivider
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor

@@ -2,6 +2,9 @@ package ca.rmen.tipcalculator.domain
 
 import ca.rmen.tipcalculator.TipInputRecord
 import ca.rmen.tipcalculator.TipOutputRecord
+import ca.rmen.tipcalculator.domain.model.TipCalculations
+import ca.rmen.tipcalculator.domain.model.TipInput
+import ca.rmen.tipcalculator.domain.reporter.TipReporter
 import ca.rmen.tipcalculator.generate__tip__report
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.memScoped

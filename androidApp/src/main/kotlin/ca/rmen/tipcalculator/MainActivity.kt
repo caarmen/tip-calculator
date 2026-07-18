@@ -11,8 +11,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.AndroidReportPathProvider
 import ca.rmen.tipcalculator.domain.AndroidTipCalculator
 import ca.rmen.tipcalculator.domain.AndroidTipReporter
-import ca.rmen.tipcalculator.domain.CalculateTipUseCase
-import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
+import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
+import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

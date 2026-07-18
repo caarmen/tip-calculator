@@ -17,7 +17,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ca.rmen.tipcalculator.domain.ServiceLevel
+import ca.rmen.tipcalculator.domain.model.ServiceLevel
 import ca.rmen.tipcalculator.ui.components.FormButton
 import ca.rmen.tipcalculator.ui.components.LabeledRow
 import ca.rmen.tipcalculator.ui.components.LabeledTextField

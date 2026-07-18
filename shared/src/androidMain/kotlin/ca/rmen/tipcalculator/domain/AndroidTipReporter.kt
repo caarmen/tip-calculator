@@ -1,5 +1,9 @@
 package ca.rmen.tipcalculator.domain
 
+import ca.rmen.tipcalculator.domain.model.TipCalculations
+import ca.rmen.tipcalculator.domain.model.TipInput
+import ca.rmen.tipcalculator.domain.reporter.TipReporter
+
 class AndroidTipReporter : TipReporter {
     override fun generateTipReport(
         tipInput: TipInput,

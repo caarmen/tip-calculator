@@ -1,4 +1,4 @@
-package ca.rmen.tipcalculator.domain
+package ca.rmen.tipcalculator.domain.model
 
 data class TipInput(
     val amountWithTax: Double,

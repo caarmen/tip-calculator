@@ -1,5 +1,7 @@
-package ca.rmen.tipcalculator.domain
+package ca.rmen.tipcalculator.domain.calculator
 
+import ca.rmen.tipcalculator.domain.model.TipCalculations
+import ca.rmen.tipcalculator.domain.model.TipInput
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

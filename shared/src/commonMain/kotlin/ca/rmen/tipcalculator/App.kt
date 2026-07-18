@@ -8,8 +8,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ca.rmen.tipcalculator.domain.ServiceLevel
-import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.domain.model.ServiceLevel
+import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.TipFormState
 import ca.rmen.tipcalculator.ui.TipScreen
