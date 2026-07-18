@@ -10,11 +10,19 @@ fun String.isMoney(): Boolean {
     }
 }
 
-fun String.isInt(): Boolean {
+fun String.isPositiveMoney(): Boolean {
     if (isBlank()) return true
     try {
-        toInt()
-        return true
+        return toDouble() > 0
+    } catch (_: NumberFormatException) {
+        return false
+    }
+}
+
+fun String.isPositiveInt(): Boolean {
+    if (isBlank()) return true
+    try {
+        return toInt() > 0
     } catch (_: NumberFormatException) {
         return false
     }
