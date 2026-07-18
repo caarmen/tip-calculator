@@ -4,9 +4,9 @@ import androidx.compose.ui.window.ComposeUIViewController
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
-import ca.rmen.tipcalculator.domain.IosReportPathProvider
-import ca.rmen.tipcalculator.domain.IosTipCalculator
-import ca.rmen.tipcalculator.domain.IosTipReporter
+import ca.rmen.tipcalculator.domain.calculator.IosTipCalculator
+import ca.rmen.tipcalculator.domain.reporter.IosReportPathProvider
+import ca.rmen.tipcalculator.domain.reporter.IosTipReporter
 import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
 
 fun MainViewController() = ComposeUIViewController {
