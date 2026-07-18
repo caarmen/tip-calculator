@@ -87,12 +87,14 @@ fun LabeledTextField(
 @Preview
 @Composable
 private fun PreviewLabeledTextField() {
-    LabeledTextField(
-        label="some label",
-        value="123",
-        onValueChange = {},
-        modifier=Modifier.background(formBackgroundColor)
-    )
+    AppTheme {
+        LabeledTextField(
+            label="some label",
+            value="123",
+            onValueChange = {},
+            modifier=Modifier.background(formBackgroundColor)
+        )
+    }
 }
 
 @Composable

@@ -49,7 +49,6 @@ fun TipReport(tipReportContent: List<String>) {
 
                     Text(
                         line,
-                        fontFamily = FontFamily.Monospace,
                         softWrap = false,
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
@@ -68,5 +67,7 @@ fun PaperHole(diameter: Dp, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun TipReportPreview() {
-    TipReport(tipReportContent = listOf("******", "line 1", "line 2"))
+    AppTheme {
+        TipReport(tipReportContent = listOf("******", "line 1", "line 2"))
+    }
 }

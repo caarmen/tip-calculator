@@ -32,6 +32,7 @@ import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.ui.AppTheme
 import ca.rmen.tipcalculator.ui.ScaleToFitWidth
 import ca.rmen.tipcalculator.ui.TipForm
 import ca.rmen.tipcalculator.ui.TipFormState
@@ -55,7 +56,7 @@ fun App(
         )
     }
 
-    MaterialTheme {
+    AppTheme {
         val tipReportContent: List<String> by viewModel.tipReportContent.collectAsState()
         val tipCalculations: TipCalculations? by viewModel.tipCalculations.collectAsState()
         var showReport by remember { mutableStateOf(false) }
