@@ -1,12 +1,12 @@
-package ca.rmen.tipcalculator
+package ca.rmen.tipcalculator.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.rmen.gnucobol.kmp.GnuCOBOL
 import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
-import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.domain.model.TipInput
+import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

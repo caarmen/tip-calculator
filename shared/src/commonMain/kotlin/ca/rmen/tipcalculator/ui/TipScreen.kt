@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import ca.rmen.tipcalculator.TipCalculatorViewModel
+import ca.rmen.tipcalculator.viewmodel.TipCalculatorViewModel
 import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.reporter.ReportPathProvider

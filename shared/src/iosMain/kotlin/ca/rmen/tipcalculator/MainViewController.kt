@@ -8,6 +8,7 @@ import ca.rmen.tipcalculator.domain.calculator.IosTipCalculator
 import ca.rmen.tipcalculator.domain.reporter.IosReportPathProvider
 import ca.rmen.tipcalculator.domain.reporter.IosTipReporter
 import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
+import ca.rmen.tipcalculator.viewmodel.TipCalculatorViewModel
 
 fun MainViewController() = ComposeUIViewController {
     App(

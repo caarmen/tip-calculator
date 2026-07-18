@@ -11,6 +11,7 @@ import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.reporter.AndroidReportPathProvider
 import ca.rmen.tipcalculator.domain.reporter.AndroidTipReporter
 import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
+import ca.rmen.tipcalculator.viewmodel.TipCalculatorViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

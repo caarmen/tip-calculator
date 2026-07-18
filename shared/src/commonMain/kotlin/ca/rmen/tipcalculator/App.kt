@@ -10,10 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.rmen.tipcalculator.domain.model.ServiceLevel
 import ca.rmen.tipcalculator.domain.model.TipCalculations
-import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.TipFormState
 import ca.rmen.tipcalculator.ui.TipScreen
 import ca.rmen.tipcalculator.ui.previewViewModelFactory
+import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.viewmodel.TipCalculatorViewModel
 
 @Composable
 fun App(
