@@ -23,8 +23,8 @@ fun App(
     var tipFormState by rememberSaveable(stateSaver = TipFormState.Saver) {
         mutableStateOf(
             TipFormState(
-                amountWithTax = "",
-                taxAmount = "",
+                amountWithTax = "0",
+                taxAmount = "0",
                 serviceLevel = ServiceLevel.GOOD,
                 numberCustomer = "2",
             )

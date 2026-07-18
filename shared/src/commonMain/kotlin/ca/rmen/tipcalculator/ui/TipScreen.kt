@@ -65,7 +65,7 @@ fun TipScreen(
                 rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
             @OptIn(ExperimentalMaterial3Api::class)
-            (ModalBottomSheet(
+            ModalBottomSheet(
                 onDismissRequest = { showReport = false },
                 sheetState = sheetState,
             ) {
@@ -76,7 +76,7 @@ fun TipScreen(
                         TipReport(tipReportContent)
                     }
                 }
-            })
+            }
         }
     }
 }
