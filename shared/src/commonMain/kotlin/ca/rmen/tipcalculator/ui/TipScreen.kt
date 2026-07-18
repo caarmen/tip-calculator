@@ -32,6 +32,7 @@ import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipCalculations
 import ca.rmen.tipcalculator.domain.TipCalculator
 import ca.rmen.tipcalculator.domain.TipInput
+import ca.rmen.tipcalculator.domain.TipReporter
 import ca.rmen.tipcalculator.ui.components.ScaleToFitWidth
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
@@ -130,10 +131,19 @@ val previewViewModelFactory = viewModelFactory {
                     tipPercentage = 20.0,
                 )
             }),
-            printUseCase = PrintReceiptUseCase(reportPathProvider = object :
-                ReportPathProvider {
-                override fun reportPath(filename: String) = "/tmp/report.txt"
-            }
+            printUseCase = PrintReceiptUseCase(
+                reportPathProvider = object :
+                    ReportPathProvider {
+                    override fun reportPath(filename: String) = "/tmp/report.txt"
+                },
+                tipReporter = object : TipReporter {
+                    override fun generateTipReport(
+                        tipInput: TipInput,
+                        reportPath: String,
+                        tipCalculations: TipCalculations
+                    ) {
+                    }
+                },
             )
         )
     }

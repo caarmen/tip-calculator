@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import ca.rmen.tipcalculator.domain.AndroidReportPathProvider
 import ca.rmen.tipcalculator.domain.AndroidTipCalculator
+import ca.rmen.tipcalculator.domain.AndroidTipReporter
 import ca.rmen.tipcalculator.domain.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 
@@ -26,7 +27,8 @@ class MainActivity : ComponentActivity() {
                         TipCalculatorViewModel(
                             calculateUseCase = CalculateTipUseCase(AndroidTipCalculator()),
                             printUseCase = PrintReceiptUseCase(
-                                AndroidReportPathProvider(this@MainActivity)
+                                reportPathProvider = AndroidReportPathProvider(this@MainActivity),
+                                tipReporter = AndroidTipReporter(),
                             )
                         )
                     }

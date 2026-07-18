@@ -43,8 +43,8 @@ class TipCalculatorViewModel(
         calculateTip(tipInput)
         tipCalculations.value?.let {
             tipReportContent.value = listOf()
-            val reportPath = printUseCase.invoke(tipInput, it)
             viewModelScope.launch {
+                val reportPath = printUseCase(tipInput, it)
                 FileSystem.SYSTEM.read(reportPath.toPath()) {
                     val lines = readUtf8().split("\n")
                     val columnCount = lines[0].length
