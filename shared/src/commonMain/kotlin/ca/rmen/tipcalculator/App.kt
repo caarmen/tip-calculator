@@ -7,8 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import ca.rmen.tipcalculator.domain.model.ServiceLevel
-import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.ui.TipFormState
+import ca.rmen.tipcalculator.ui.TipResultState
 import ca.rmen.tipcalculator.ui.TipScreen
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.viewmodel.TipCalculatorViewModel
@@ -30,11 +30,11 @@ fun App() {
 
     AppTheme {
         val tipReportContent: List<String> by viewModel.tipReportContent.collectAsState()
-        val tipCalculations: TipCalculations? by viewModel.tipCalculations.collectAsState()
+        val tipResultState: TipResultState? by viewModel.tipResultState.collectAsState(null)
         TipScreen(
             tipFormState = tipFormState,
             tipReportContent = tipReportContent,
-            tipCalculations = tipCalculations,
+            tipResultState = tipResultState,
             onStateChange = { newState ->
                 tipFormState = newState
                 viewModel.resetCalculations()

@@ -7,13 +7,19 @@ import ca.rmen.tipcalculator.domain.calculator.CalculateTipUseCase
 import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.domain.model.TipInput
 import ca.rmen.tipcalculator.domain.reporter.PrintReceiptUseCase
+import ca.rmen.tipcalculator.ui.TipResultState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.SYSTEM
 import org.koin.core.annotation.KoinViewModel
+import kotlin.math.abs
+import kotlin.math.round
+
 
 @KoinViewModel
 class TipCalculatorViewModel(
@@ -25,8 +31,16 @@ class TipCalculatorViewModel(
         GnuCOBOL.initialize()
     }
 
-    val tipCalculations: StateFlow<TipCalculations?>
-        field: MutableStateFlow<TipCalculations?> = MutableStateFlow(null)
+    private val tipCalculations = MutableStateFlow<TipCalculations?>(null)
+
+    val tipResultState: Flow<TipResultState?> = tipCalculations.map { resultState ->
+        resultState?.let {
+            TipResultState(
+                totalTip = it.totalTip.toMoneyString(),
+                tipPerPerson = it.tipPerPerson.toMoneyString(),
+            )
+        }
+    }
 
     val tipReportContent: StateFlow<List<String>>
         field: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
@@ -57,4 +71,15 @@ class TipCalculatorViewModel(
             }
         }
     }
+}
+
+/**
+ * For now, assume non-negative values and two decimal places.
+ * TODO: use proper monetary formatting apis.
+ */
+private fun Double.toMoneyString(): String {
+    val cents = round(abs(this) * 100).toLong()
+    val wholePart = cents / 100
+    val fractionPart = (cents % 100).toString().padStart(2, '0')
+    return "$wholePart.$fractionPart"
 }
