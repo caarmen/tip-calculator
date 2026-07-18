@@ -5,14 +5,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CalculateTipUseCase(
+    private val tipCalculator: TipCalculator,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
     suspend operator fun invoke(tipInput: TipInput): TipCalculations =
         withContext(dispatcher) {
-            calculateTip(tipInput)
+            tipCalculator.calculateTip(tipInput)
         }
 }
-
-expect fun calculateTip(
-    tipInput: TipInput,
-): TipCalculations

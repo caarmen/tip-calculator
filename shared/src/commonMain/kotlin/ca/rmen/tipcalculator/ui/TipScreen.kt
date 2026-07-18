@@ -30,6 +30,8 @@ import ca.rmen.tipcalculator.domain.PrintReceiptUseCase
 import ca.rmen.tipcalculator.domain.ReportPathProvider
 import ca.rmen.tipcalculator.domain.ServiceLevel
 import ca.rmen.tipcalculator.domain.TipCalculations
+import ca.rmen.tipcalculator.domain.TipCalculator
+import ca.rmen.tipcalculator.domain.TipInput
 import ca.rmen.tipcalculator.ui.components.ScaleToFitWidth
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
@@ -119,7 +121,15 @@ private fun PreviewTipScreen(
 val previewViewModelFactory = viewModelFactory {
     initializer {
         TipCalculatorViewModel(
-            calculateUseCase = CalculateTipUseCase(),
+            calculateUseCase = CalculateTipUseCase(object : TipCalculator {
+                override fun calculateTip(tipInput: TipInput): TipCalculations = TipCalculations(
+                    totalTip = 20.0,
+                    tipPerPerson = 10.0,
+                    totalWithTip = 100.0,
+                    pretaxAmount = 92.0,
+                    tipPercentage = 20.0,
+                )
+            }),
             printUseCase = PrintReceiptUseCase(reportPathProvider = object :
                 ReportPathProvider {
                 override fun reportPath(filename: String) = "/tmp/report.txt"
