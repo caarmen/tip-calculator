@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.ui.components.DottedDivider
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
@@ -26,14 +25,10 @@ import tipcalculator.shared.generated.resources.label_results
 
 @Composable
 fun TipResultUi(
-    tipCalculations: TipCalculations = TipCalculations(
-        totalWithTip = 120.0,
-        totalTip = 20.0,
-        tipPerPerson = 10.0,
-        pretaxAmount = 92.0,
-        tipPercentage = 20.0,
-
-        ),
+    tipResultState: TipResultState = TipResultState(
+        totalTip = "20.00",
+        tipPerPerson = "10.00",
+    ),
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -50,7 +45,7 @@ fun TipResultUi(
                 text = stringResource(Res.string.label_result_total_tip).uppercase(),
                 color = formLabelTextColor
             )
-            Text(text = tipCalculations.totalTip.toString(), color = formLabelTextColor)
+            Text(text = tipResultState.totalTip, color = formLabelTextColor)
         }
         DottedDivider(modifier = Modifier.padding(bottom = 16.dp))
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
@@ -58,7 +53,7 @@ fun TipResultUi(
                 text = stringResource(Res.string.label_result_tip_per_person).uppercase(),
                 color = formLabelTextColor
             )
-            Text(text = tipCalculations.tipPerPerson.toString(), color = formLabelTextColor)
+            Text(text = tipResultState.tipPerPerson, color = formLabelTextColor)
         }
     }
 }

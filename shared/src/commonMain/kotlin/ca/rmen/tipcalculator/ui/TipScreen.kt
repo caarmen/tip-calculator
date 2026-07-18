@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ca.rmen.tipcalculator.domain.model.ServiceLevel
-import ca.rmen.tipcalculator.domain.model.TipCalculations
 import ca.rmen.tipcalculator.ui.components.ScaleToFitWidth
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
@@ -31,7 +30,7 @@ import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
 @Composable
 fun TipScreen(
     tipFormState: TipFormState,
-    tipCalculations: TipCalculations?,
+    tipResultState: TipResultState?,
     tipReportContent: List<String>,
     onStateChange: (TipFormState) -> Unit = {},
     onClickCalculate: () -> Unit = {},
@@ -54,8 +53,8 @@ fun TipScreen(
                 showReport = true
             },
         )
-        tipCalculations?.let {
-            TipResultUi(tipCalculations = it)
+        tipResultState?.let {
+            TipResultUi(tipResultState = it)
         }
         if (showReport && tipReportContent.isNotEmpty()) {
             @OptIn(ExperimentalMaterial3Api::class) val sheetState =
@@ -78,15 +77,12 @@ fun TipScreen(
     }
 }
 
-class TipCalculationsProvider : PreviewParameterProvider<TipCalculations?> {
+class TipCalculationsProvider : PreviewParameterProvider<TipResultState?> {
     override val values = sequenceOf(
         null,
-        TipCalculations(
-            totalTip = 50.0,
-            tipPerPerson = 25.0,
-            totalWithTip = 100.0,
-            pretaxAmount = 80.0,
-            tipPercentage = 15.0,
+        TipResultState(
+            totalTip = "50.0",
+            tipPerPerson = "25.0",
         )
     )
 }
@@ -94,7 +90,7 @@ class TipCalculationsProvider : PreviewParameterProvider<TipCalculations?> {
 @Composable
 @Preview
 private fun PreviewTipScreen(
-    @PreviewParameter(TipCalculationsProvider::class) tipCalculations: TipCalculations?
+    @PreviewParameter(TipCalculationsProvider::class) tipResultState: TipResultState?
 ) {
     AppTheme {
         TipScreen(
@@ -104,7 +100,7 @@ private fun PreviewTipScreen(
                 serviceLevel = ServiceLevel.GOOD,
                 numberCustomer = "2",
             ),
-            tipCalculations = tipCalculations,
+            tipResultState = tipResultState,
             tipReportContent = listOf(),
         )
     }
