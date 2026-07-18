@@ -1,0 +1,59 @@
+name: build
+on: workflow_dispatch
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Setup GnuCOBOL
+        run: sudo apt-get install gnucobol3
+
+      - name: Build android
+        run: |
+          ./gradlew :androidApp:assembleDebug
+
+      - name: Upload android apk
+        uses: actions/upload-artifact@v7
+        with:
+          name: tip-calculator-android.apk
+          path: ./androidApp/build/outputs/apk/debug/androidApp-debug.apk
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Setup GnuCOBOL
+        run: brew install gnucobol
+
+      - name: Build ios app
+        run: |
+          cd iosApp
+          xcodebuild -project iosApp.xcodeproj -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 17' CONFIGURATION_BUILD_DIR="$(pwd)/build/app" build
+
+      - name: Upload ios app
+        uses: actions/upload-artifact@v7
+        with:
+          name: tip-calculator-ios.app
+          path: iosApp/build/app/TipCalculator.app
+
