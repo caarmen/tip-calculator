@@ -57,7 +57,7 @@
        report section.
       *>-------------------------------------------------------------
        rd tip-report
-           page limit is 36 lines
+           page limit is 26 lines
                heading 1.
 
        01 type is report heading.
