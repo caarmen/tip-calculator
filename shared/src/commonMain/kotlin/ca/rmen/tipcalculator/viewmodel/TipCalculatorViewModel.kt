@@ -56,11 +56,11 @@ class TipCalculatorViewModel(
     }
 
     fun printReceipt(tipInput: TipInput) {
-        calculateTip(tipInput)
-        tipCalculations.value?.let {
-            tipReportContent.value = listOf()
-            viewModelScope.launch {
-                val reportPath = printUseCase(tipInput, it)
+        viewModelScope.launch {
+            calculateUseCase.invoke(tipInput).let { calculations ->
+                tipCalculations.value = calculations
+                tipReportContent.value = listOf()
+                val reportPath = printUseCase(tipInput, calculations)
                 FileSystem.SYSTEM.read(reportPath.toPath()) {
                     val lines = readUtf8().split("\n")
                     val columnCount = lines[0].length
