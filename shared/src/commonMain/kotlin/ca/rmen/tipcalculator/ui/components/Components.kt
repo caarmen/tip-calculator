@@ -93,7 +93,6 @@ fun LabeledTextField(
                 unfocusedLabelColor = formInputTextColor,
             ),
             modifier = Modifier.fillMaxWidth(),
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
         )
     }
 }
