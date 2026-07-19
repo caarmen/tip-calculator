@@ -106,7 +106,7 @@ Java_ca_rmen_tipcalculator_BridgeKt_generateTipReport(
     output.total_tip = total_tip;
     output.tip_per_customer = tip_per_person;
     output.pretax_amount = pre_tax_amount;
-    output.tip_percentage = tip_per_person;
+    output.tip_percentage = tip_percentage;
     // Call COBOL function
     generate__tip__report(
             &input,

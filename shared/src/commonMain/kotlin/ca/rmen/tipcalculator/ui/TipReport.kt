@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.ui.theme.ReportTheme
 
 @Composable
 fun TipReport(tipReportContent: List<String>) {
@@ -67,7 +68,7 @@ fun PaperHole(diameter: Dp, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun TipReportPreview() {
-    AppTheme {
+    ReportTheme {
         TipReport(tipReportContent = listOf("******", "line 1", "line 2"))
     }
 }

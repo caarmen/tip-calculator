@@ -10,5 +10,5 @@
     <string name="label_result_total_tip">Total tip</string>
     <string name="label_result_tip_per_person">Tip per person</string>
     <string name="button_calculate">Calculate</string>
-    <string name="button_print_receipt">Print receipt</string>
+    <string name="button_print_receipt">Report</string>
 </resources>
