@@ -138,9 +138,9 @@
            accept ls-date from date yyyymmdd
 
           *> Copy the fields to the report file data items.
-           move in-amount-with-tax to f-amount-with-tax
-           move in-pretax-amount to f-pretax-amount
-           move in-tax-amount to f-tax-amount
+           compute f-amount-with-tax rounded = in-amount-with-tax
+           compute f-pretax-amount rounded = in-pretax-amount
+           compute f-tax-amount rounded = in-tax-amount
            evaluate true
                when in-service-level-excellent
                    move "EXCELLENT" to f-service-level
@@ -152,9 +152,9 @@
            call "C$JUSTIFY" USING f-service-level "R"
            move in-tip-percentage to f-tip-percentage
            move in-number-customers to f-number-customers
-           move in-tip-per-customer to f-tip-per-customer-txt
-           move in-total-tip to f-total-tip-txt
-           move in-total-with-tip to f-total-with-tip
+           compute f-tip-per-customer-txt rounded = in-tip-per-customer
+           compute f-total-tip-txt rounded = in-total-tip
+           compute f-total-with-tip rounded = in-total-with-tip
 
           *> Generate the report.
            open output report-file
