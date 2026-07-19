@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -20,7 +19,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,6 +64,7 @@ fun DottedDivider(modifier: Modifier = Modifier) {
 @Composable
 fun LabeledTextField(
     label: String,
+    hint: String,
     value: String,
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -75,6 +74,7 @@ fun LabeledTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
+            placeholder = {Text(hint)},
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = formBackgroundColor,
@@ -103,7 +103,8 @@ private fun PreviewLabeledTextField() {
     AppTheme {
         LabeledTextField(
             label = "some label",
-            value = "123",
+            hint = "123.00",
+            value = "",
             onValueChange = {},
             modifier = Modifier.background(formBackgroundColor)
         )

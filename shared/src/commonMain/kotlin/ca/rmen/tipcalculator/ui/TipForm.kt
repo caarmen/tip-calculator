@@ -29,6 +29,9 @@ import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.button_calculate
 import tipcalculator.shared.generated.resources.button_print_receipt
+import tipcalculator.shared.generated.resources.hint_amount_with_tax
+import tipcalculator.shared.generated.resources.hint_number_customers
+import tipcalculator.shared.generated.resources.hint_tax
 import tipcalculator.shared.generated.resources.label_amount_with_tax
 import tipcalculator.shared.generated.resources.label_number_customers
 import tipcalculator.shared.generated.resources.label_service_level
@@ -59,11 +62,13 @@ fun TipForm(
     ) {
         LabeledTextField(
             label = stringResource(Res.string.label_amount_with_tax),
+            hint = stringResource(Res.string.hint_amount_with_tax),
             value = tipFormState.amountWithTax,
             onValueChange = { onStateChange(tipFormState.updateAmountWithTax(it)) },
         )
         LabeledTextField(
             label = stringResource(Res.string.label_tax),
+            hint = stringResource(Res.string.hint_tax),
             value = tipFormState.taxAmount,
             onValueChange = { onStateChange(tipFormState.updateTaxAmount(it)) },
         )
@@ -100,6 +105,7 @@ fun TipForm(
         }
         LabeledTextField(
             label = stringResource(Res.string.label_number_customers),
+            hint = stringResource(Res.string.hint_number_customers),
             value = tipFormState.numberCustomer,
             onValueChange = { onStateChange(tipFormState.updateNumberCustomer(it)) },
             keyboardType = KeyboardType.Number,
