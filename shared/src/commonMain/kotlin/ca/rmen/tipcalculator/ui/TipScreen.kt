@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ca.rmen.tipcalculator.domain.model.ServiceLevel
 import ca.rmen.tipcalculator.ui.components.ScaleToFitWidth
 import ca.rmen.tipcalculator.ui.theme.AppTheme
+import ca.rmen.tipcalculator.ui.theme.ReportTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
 
 @Composable
@@ -69,7 +70,9 @@ fun TipScreen(
                     modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())
                 ) {
                     ScaleToFitWidth(modifier = Modifier.fillMaxWidth()) {
-                        TipReport(tipReportContent)
+                        ReportTheme {
+                            TipReport(tipReportContent)
+                        }
                     }
                 }
             }

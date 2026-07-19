@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.Font
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.decterm
+import tipcalculator.shared.generated.resources.doto
 
 @Composable
 private fun appTypography(
@@ -91,8 +92,17 @@ fun AppTheme(content: @Composable () -> Unit) {
         ),
         content = content,
     )
+}
+
+@Composable
+fun ReportTheme(content: @Composable () -> Unit) {
     MaterialTheme(
-        typography = appTypography(appFontFamily),
+        typography = appTypography(
+            // https://github.com/oliverlalan/Doto
+            fontFamily = FontFamily(
+                Font(Res.font.doto, FontWeight.Normal)
+            ),
+        ),
         content = content,
     )
 }
