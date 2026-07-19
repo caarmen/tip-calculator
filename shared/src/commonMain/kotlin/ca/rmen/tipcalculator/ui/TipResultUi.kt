@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import ca.rmen.tipcalculator.ui.components.DottedDivider
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
-import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
+import ca.rmen.tipcalculator.ui.theme.formBrightColor
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.label_result_tip_per_person
@@ -32,28 +32,28 @@ fun TipResultUi(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(16.dp).border(width = 1.dp, color = formLabelTextColor)
+        modifier = modifier.padding(16.dp).border(width = 1.dp, color = formBrightColor)
             .padding(16.dp),
     ) {
         Text(
             text = stringResource(Res.string.label_results).uppercase(),
-            color = formLabelTextColor
+            color = formBrightColor
         )
         DottedDivider(modifier = Modifier.padding(bottom = 16.dp))
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(Res.string.label_result_total_tip).uppercase(),
-                color = formLabelTextColor
+                color = formBrightColor
             )
-            Text(text = tipResultState.totalTip, color = formLabelTextColor)
+            Text(text = tipResultState.totalTip, color = formBrightColor)
         }
         DottedDivider(modifier = Modifier.padding(bottom = 16.dp))
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(Res.string.label_result_tip_per_person).uppercase(),
-                color = formLabelTextColor
+                color = formBrightColor
             )
-            Text(text = tipResultState.tipPerPerson, color = formLabelTextColor)
+            Text(text = tipResultState.tipPerPerson, color = formBrightColor)
         }
     }
 }

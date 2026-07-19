@@ -24,10 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
-import ca.rmen.tipcalculator.ui.theme.formDisabledTextColor
-import ca.rmen.tipcalculator.ui.theme.formInputTextColor
-import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
-import ca.rmen.tipcalculator.ui.theme.formTextHintColor
+import ca.rmen.tipcalculator.ui.theme.formBrightColor
+import ca.rmen.tipcalculator.ui.theme.formDimColor
 
 @Composable
 fun LabeledRow(
@@ -42,7 +40,7 @@ fun LabeledRow(
             contentAlignment = Alignment.CenterStart,
             modifier = Modifier.padding(bottom = 8.dp)
         ) {
-            Text(label.uppercase(), color = formLabelTextColor)
+            Text(label.uppercase(), color = formBrightColor)
         }
         Box {
             content()
@@ -57,7 +55,7 @@ fun DottedDivider(modifier: Modifier = Modifier) {
         ".".repeat(200),
         maxLines = 1,
         overflow = TextOverflow.Clip,
-        color = formLabelTextColor,
+        color = formBrightColor,
         modifier = modifier.clearAndSetSemantics {}
     )
 }
@@ -82,19 +80,19 @@ fun LabeledTextField(
                 unfocusedContainerColor = formBackgroundColor,
                 disabledContainerColor = formBackgroundColor,
 
-                focusedTextColor = formInputTextColor,
-                unfocusedTextColor = formInputTextColor,
+                focusedTextColor = formBrightColor,
+                unfocusedTextColor = formBrightColor,
 
-                cursorColor = formInputTextColor,
+                cursorColor = formBrightColor,
 
-                focusedIndicatorColor = formLabelTextColor,
-                unfocusedIndicatorColor = formLabelTextColor,
+                focusedIndicatorColor = formBrightColor,
+                unfocusedIndicatorColor = formBrightColor,
 
-                focusedLabelColor = formInputTextColor,
-                unfocusedLabelColor = formInputTextColor,
+                focusedLabelColor = formBrightColor,
+                unfocusedLabelColor = formBrightColor,
 
-                focusedPlaceholderColor = formTextHintColor,
-                unfocusedPlaceholderColor = formTextHintColor,
+                focusedPlaceholderColor = formDimColor,
+                unfocusedPlaceholderColor = formDimColor,
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -134,10 +132,10 @@ fun FormButton(
         ),
         colors = ButtonDefaults.buttonColors(
             containerColor = formBackgroundColor,
-            contentColor = formInputTextColor,
-            disabledContentColor = formDisabledTextColor,
+            contentColor = formBrightColor,
+            disabledContentColor = formDimColor,
         ),
-        border = BorderStroke(1.dp, formLabelTextColor),
+        border = BorderStroke(1.dp, formBrightColor),
         modifier = Modifier.padding(16.dp),
 
         ) {
