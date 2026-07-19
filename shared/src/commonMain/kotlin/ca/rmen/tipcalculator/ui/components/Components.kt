@@ -136,8 +136,6 @@ fun FormButton(
             disabledContentColor = formDimColor,
         ),
         border = BorderStroke(1.dp, formBrightColor),
-        modifier = Modifier.padding(16.dp),
-
         ) {
         Text(label)
     }
