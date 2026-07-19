@@ -73,7 +73,7 @@ fun LabeledTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            placeholder = {Text(hint)},
+            placeholder = { Text(hint) },
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = formBackgroundColor,
@@ -140,6 +140,20 @@ fun FormButton(
 
         ) {
         Text(label)
+    }
+
+}
+
+
+@Composable
+@Preview
+private fun PreviewButton() {
+    AppTheme {
+        FormButton(
+            label = "Click",
+            enabled = true,
+            onClick = {}
+        )
     }
 
 }
