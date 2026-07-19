@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -20,15 +19,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
-import ca.rmen.tipcalculator.ui.theme.formDisabledTextColor
-import ca.rmen.tipcalculator.ui.theme.formInputTextColor
-import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
+import ca.rmen.tipcalculator.ui.theme.formBrightColor
+import ca.rmen.tipcalculator.ui.theme.formDimColor
 
 @Composable
 fun LabeledRow(
@@ -43,7 +40,7 @@ fun LabeledRow(
             contentAlignment = Alignment.CenterStart,
             modifier = Modifier.padding(bottom = 8.dp)
         ) {
-            Text(label.uppercase(), color = formLabelTextColor)
+            Text(label.uppercase(), color = formBrightColor)
         }
         Box {
             content()
@@ -58,7 +55,7 @@ fun DottedDivider(modifier: Modifier = Modifier) {
         ".".repeat(200),
         maxLines = 1,
         overflow = TextOverflow.Clip,
-        color = formLabelTextColor,
+        color = formBrightColor,
         modifier = modifier.clearAndSetSemantics {}
     )
 }
@@ -66,6 +63,7 @@ fun DottedDivider(modifier: Modifier = Modifier) {
 @Composable
 fun LabeledTextField(
     label: String,
+    hint: String,
     value: String,
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -75,25 +73,28 @@ fun LabeledTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
+            placeholder = {Text(hint)},
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = formBackgroundColor,
                 unfocusedContainerColor = formBackgroundColor,
                 disabledContainerColor = formBackgroundColor,
 
-                focusedTextColor = formInputTextColor,
-                unfocusedTextColor = formInputTextColor,
+                focusedTextColor = formBrightColor,
+                unfocusedTextColor = formBrightColor,
 
-                cursorColor = formInputTextColor,
+                cursorColor = formBrightColor,
 
-                focusedIndicatorColor = formLabelTextColor,
-                unfocusedIndicatorColor = formLabelTextColor,
+                focusedIndicatorColor = formBrightColor,
+                unfocusedIndicatorColor = formBrightColor,
 
-                focusedLabelColor = formInputTextColor,
-                unfocusedLabelColor = formInputTextColor,
+                focusedLabelColor = formBrightColor,
+                unfocusedLabelColor = formBrightColor,
+
+                focusedPlaceholderColor = formDimColor,
+                unfocusedPlaceholderColor = formDimColor,
             ),
             modifier = Modifier.fillMaxWidth(),
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
         )
     }
 }
@@ -104,7 +105,8 @@ private fun PreviewLabeledTextField() {
     AppTheme {
         LabeledTextField(
             label = "some label",
-            value = "123",
+            hint = "123.00",
+            value = "",
             onValueChange = {},
             modifier = Modifier.background(formBackgroundColor)
         )
@@ -130,10 +132,10 @@ fun FormButton(
         ),
         colors = ButtonDefaults.buttonColors(
             containerColor = formBackgroundColor,
-            contentColor = formInputTextColor,
-            disabledContentColor = formDisabledTextColor,
+            contentColor = formBrightColor,
+            disabledContentColor = formDimColor,
         ),
-        border = BorderStroke(1.dp, formLabelTextColor),
+        border = BorderStroke(1.dp, formBrightColor),
         modifier = Modifier.padding(16.dp),
 
         ) {

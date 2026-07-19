@@ -23,12 +23,15 @@ import ca.rmen.tipcalculator.ui.components.LabeledRow
 import ca.rmen.tipcalculator.ui.components.LabeledTextField
 import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
-import ca.rmen.tipcalculator.ui.theme.formInputTextColor
-import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
+import ca.rmen.tipcalculator.ui.theme.formBrightColor
+import ca.rmen.tipcalculator.ui.theme.formDimColor
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.button_calculate
 import tipcalculator.shared.generated.resources.button_print_receipt
+import tipcalculator.shared.generated.resources.hint_amount_with_tax
+import tipcalculator.shared.generated.resources.hint_number_customers
+import tipcalculator.shared.generated.resources.hint_tax
 import tipcalculator.shared.generated.resources.label_amount_with_tax
 import tipcalculator.shared.generated.resources.label_number_customers
 import tipcalculator.shared.generated.resources.label_service_level
@@ -48,7 +51,8 @@ fun TipForm(
     modifier: Modifier = Modifier,
 ) {
     val radioButtonColors = RadioButtonDefaults.colors(
-        selectedColor = formLabelTextColor
+        selectedColor = formBrightColor,
+        unselectedColor = formDimColor,
     )
 
     Column(
@@ -59,13 +63,17 @@ fun TipForm(
     ) {
         LabeledTextField(
             label = stringResource(Res.string.label_amount_with_tax),
+            hint = stringResource(Res.string.hint_amount_with_tax),
             value = tipFormState.amountWithTax,
             onValueChange = { onStateChange(tipFormState.updateAmountWithTax(it)) },
+            keyboardType = KeyboardType.Decimal,
         )
         LabeledTextField(
             label = stringResource(Res.string.label_tax),
+            hint = stringResource(Res.string.hint_tax),
             value = tipFormState.taxAmount,
             onValueChange = { onStateChange(tipFormState.updateTaxAmount(it)) },
+            keyboardType = KeyboardType.Decimal,
         )
         LabeledRow(
             label = stringResource(Res.string.label_service_level),
@@ -93,13 +101,14 @@ fun TipForm(
                             onClick = null,
                             colors = radioButtonColors,
                         )
-                        Text(candidate.name, color = formInputTextColor)
+                        Text(candidate.name, color = formBrightColor)
                     }
                 }
             }
         }
         LabeledTextField(
             label = stringResource(Res.string.label_number_customers),
+            hint = stringResource(Res.string.hint_number_customers),
             value = tipFormState.numberCustomer,
             onValueChange = { onStateChange(tipFormState.updateNumberCustomer(it)) },
             keyboardType = KeyboardType.Number,
