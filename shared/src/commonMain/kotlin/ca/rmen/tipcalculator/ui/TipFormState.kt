@@ -14,23 +14,44 @@ data class TipFormState(
     val numberCustomer: String,
 ) {
     val isValid: Boolean
-        get() = amountWithTax.isPositiveMoney() && taxAmount.isMoney() && numberCustomer.isPositiveInt()
-                && amountWithTax.isNotBlank() && taxAmount.isNotBlank() && numberCustomer.isNotBlank()
+        get() = amountWithTax.toPositiveMoney() != null
+                && taxAmount.toMoney() != null
+                && numberCustomer.isPositiveInt()
+                && amountWithTax.isNotBlank()
+                && taxAmount.isNotBlank()
+                && numberCustomer.isNotBlank()
 
+    /**
+     * Return a new state with the new amountWithTax value if:
+     * - we were able to transform newValue to a positive monetary value
+     * - and the new value is different from the previous value
+     *
+     * Otherwise, return the current state.
+     */
     fun updateAmountWithTax(newValue: String): TipFormState =
-        if (newValue != amountWithTax && newValue.isPositiveMoney()) {
-            copy(amountWithTax = newValue)
-        } else this
+        newValue.toPositiveMoney()?.let { transformedValue ->
+            if (transformedValue != amountWithTax) {
+                copy(amountWithTax = transformedValue)
+            } else this
+        } ?: this
 
+    /**
+     * Return a new state with the new taxAmount value if:
+     * - we were able to transform newValue to a monetary value
+     * - and the new value is different from the previous value
+     *
+     * Otherwise, return the current state.
+     */
     fun updateTaxAmount(newValue: String): TipFormState =
-        if (newValue != taxAmount && newValue.isMoney()) {
-            copy(taxAmount = newValue)
-        } else this
+        newValue.toMoney()?.let { transformedValue ->
+            if (transformedValue != taxAmount) {
+                copy(taxAmount = transformedValue)
+            } else this
+        } ?: this
 
-    fun updateServiceLevel(newValue: ServiceLevel): TipFormState =
-        if (newValue != serviceLevel) {
-            copy(serviceLevel = newValue)
-        } else this
+    fun updateServiceLevel(newValue: ServiceLevel): TipFormState = if (newValue != serviceLevel) {
+        copy(serviceLevel = newValue)
+    } else this
 
     fun updateNumberCustomer(newValue: String): TipFormState =
         if (newValue != numberCustomer && newValue.isPositiveInt()) {

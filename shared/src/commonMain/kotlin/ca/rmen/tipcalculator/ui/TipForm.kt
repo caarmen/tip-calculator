@@ -66,12 +66,14 @@ fun TipForm(
             hint = stringResource(Res.string.hint_amount_with_tax),
             value = tipFormState.amountWithTax,
             onValueChange = { onStateChange(tipFormState.updateAmountWithTax(it)) },
+            keyboardType = KeyboardType.Decimal,
         )
         LabeledTextField(
             label = stringResource(Res.string.label_tax),
             hint = stringResource(Res.string.hint_tax),
             value = tipFormState.taxAmount,
             onValueChange = { onStateChange(tipFormState.updateTaxAmount(it)) },
+            keyboardType = KeyboardType.Decimal,
         )
         LabeledRow(
             label = stringResource(Res.string.label_service_level),

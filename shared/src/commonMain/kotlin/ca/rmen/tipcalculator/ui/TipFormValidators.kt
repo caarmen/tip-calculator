@@ -1,21 +1,25 @@
 package ca.rmen.tipcalculator.ui
 
-fun String.isMoney(): Boolean {
-    if (isBlank()) return true
-    try {
-        toDouble()
-        return true
+fun String.toMoney(): String? {
+    if (isBlank()) return ""
+    val transformedValue = replace(",", ".")
+    return try {
+        transformedValue.toDouble()
+        transformedValue
     } catch (_: NumberFormatException) {
-        return false
+        null
     }
 }
 
-fun String.isPositiveMoney(): Boolean {
-    if (isBlank()) return true
-    try {
-        return toDouble() > 0
+fun String.toPositiveMoney(): String? {
+    if (isBlank()) {
+        return ""
+    }
+    val transformedValue = replace(",", ".")
+    return try {
+        if (transformedValue.toDouble() > 0) transformedValue else null
     } catch (_: NumberFormatException) {
-        return false
+        null
     }
 }
 
