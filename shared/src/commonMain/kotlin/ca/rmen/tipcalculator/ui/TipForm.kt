@@ -25,6 +25,7 @@ import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
 import ca.rmen.tipcalculator.ui.theme.formInputTextColor
 import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
+import ca.rmen.tipcalculator.ui.theme.formTextHintColor
 import org.jetbrains.compose.resources.stringResource
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.button_calculate
@@ -51,7 +52,8 @@ fun TipForm(
     modifier: Modifier = Modifier,
 ) {
     val radioButtonColors = RadioButtonDefaults.colors(
-        selectedColor = formLabelTextColor
+        selectedColor = formLabelTextColor,
+        unselectedColor = formTextHintColor,
     )
 
     Column(

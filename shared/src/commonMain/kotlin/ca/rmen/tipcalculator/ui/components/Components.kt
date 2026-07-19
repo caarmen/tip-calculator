@@ -27,6 +27,7 @@ import ca.rmen.tipcalculator.ui.theme.formBackgroundColor
 import ca.rmen.tipcalculator.ui.theme.formDisabledTextColor
 import ca.rmen.tipcalculator.ui.theme.formInputTextColor
 import ca.rmen.tipcalculator.ui.theme.formLabelTextColor
+import ca.rmen.tipcalculator.ui.theme.formTextHintColor
 
 @Composable
 fun LabeledRow(
@@ -91,6 +92,9 @@ fun LabeledTextField(
 
                 focusedLabelColor = formInputTextColor,
                 unfocusedLabelColor = formInputTextColor,
+
+                focusedPlaceholderColor = formTextHintColor,
+                unfocusedPlaceholderColor = formTextHintColor,
             ),
             modifier = Modifier.fillMaxWidth(),
         )
