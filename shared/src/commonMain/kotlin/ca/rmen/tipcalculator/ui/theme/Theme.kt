@@ -19,39 +19,39 @@ private fun appTypography(
         copy(
             displayLarge = displayLarge.copy(
                 fontFamily = fontFamily,
-                fontSize = displayLarge.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             displayMedium = displayMedium.copy(
                 fontFamily = fontFamily,
-                fontSize = displayMedium.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             displaySmall = displaySmall.copy(
                 fontFamily = fontFamily,
-                fontSize = displaySmall.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             headlineLarge = headlineLarge.copy(
                 fontFamily = fontFamily,
-                fontSize = headlineLarge.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             headlineMedium = headlineMedium.copy(
                 fontFamily = fontFamily,
-                fontSize = headlineMedium.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             headlineSmall = headlineSmall.copy(
                 fontFamily = fontFamily,
-                fontSize = headlineSmall.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             titleLarge = titleLarge.copy(
                 fontFamily = fontFamily,
-                fontSize = titleLarge.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             titleMedium = titleMedium.copy(
                 fontFamily = fontFamily,
-                fontSize = titleMedium.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             titleSmall = titleSmall.copy(
                 fontFamily = fontFamily,
-                fontSize = titleSmall.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             bodyLarge = bodyLarge.copy(
                 fontFamily = fontFamily,
@@ -59,23 +59,23 @@ private fun appTypography(
             ),
             bodyMedium = bodyMedium.copy(
                 fontFamily = fontFamily,
-                fontSize = bodyMedium.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             bodySmall = bodySmall.copy(
                 fontFamily = fontFamily,
-                fontSize = bodySmall.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             labelLarge = labelLarge.copy(
                 fontFamily = fontFamily,
-                fontSize = labelLarge.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             labelMedium = labelMedium.copy(
                 fontFamily = fontFamily,
-                fontSize = labelMedium.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
             labelSmall = labelSmall.copy(
                 fontFamily = fontFamily,
-                fontSize = labelSmall.fontSize * fontSizeMultiplier
+                fontSize = bodyLarge.fontSize * fontSizeMultiplier
             ),
         )
     }
