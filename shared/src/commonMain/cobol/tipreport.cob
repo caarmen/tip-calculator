@@ -62,14 +62,14 @@
 
        01 type is report heading.
            05 line number plus 1.
-               10 col 1 source c-stars pic x(56).
+               10 col 1 source c-stars pic x(38).
            05 line number plus 1.
                10 col 1 source ls-date pic 9999/99/99.
-               10 col 24 value 'Tipping summary'.
-               10 col 49 value 'Page:'.
-               10 col 55 source page-counter pic z9.
+               10 col 13 value 'Tipping summary'.
+               10 col 31 value 'Page:'.
+               10 col 37 source page-counter pic z9.
            05 line number plus 1.
-               10 col 1 source c-stars pic x(56).
+               10 col 1 source c-stars pic x(38).
 
        01 bill-detail type is detail.
            05 line number plus 2.
@@ -78,15 +78,15 @@
                10 col 3 source c-double-dashes pic x(12).
            05 line number plus 1.
                10 col 3 value 'SUBTOTAL:'.
-               10 col 34 source f-pretax-amount pic zzzzz9.99.
+               10 col 26 source f-pretax-amount pic zzzzz9.99.
            05 line number plus 1.
                10 col 3 value 'TAX AMOUNT:'.
-               10 col 34 source f-tax-amount pic zzzzz9.99.
+               10 col 26 source f-tax-amount pic zzzzz9.99.
            05 line number plus 1.
-               10 col 3 source c-dashes pic x(40).
+               10 col 3 source c-dashes pic x(32).
            05 line number plus 1.
                10 col 3 value 'BILL TOTAL:'.
-               10 col 34 source f-amount-with-tax pic zzzzz9.99.
+               10 col 26 source f-amount-with-tax pic zzzzz9.99.
 
        01 tip-detail type is detail.
            05 line number plus 3.
@@ -95,14 +95,14 @@
                10 col 3 source c-double-dashes pic x(7).
            05 line number plus 1.
                10 col 3 value 'SERVICE QUALITY:'.
-               10 col 33 source f-service-level pic x(10).
+               10 col 25 source f-service-level pic x(10).
            05 line number plus 1.
                10 col 3 value 'TIP PERCENTAGE:'.
-               10 col 39 source f-tip-percentage pic z99.
-               10 col 42 value '%'.
+               10 col 31 source f-tip-percentage pic z99.
+               10 col 34 value '%'.
            05 line number plus 1.
                10 col 3 value 'NUMBER OF PEOPLE:'.
-               10 col 40 source f-number-customers pic zz9.
+               10 col 32 source f-number-customers pic zz9.
 
        01 total-detail type is detail.
            05 line number plus 3.
@@ -111,21 +111,21 @@
                10 col 3 source c-double-dashes pic x(6).
            05 line number plus 1.
                10 col 3 value 'TOTAL TIP:'.
-               10 col 34 source f-total-tip-txt pic zzzzz9.99.
+               10 col 26 source f-total-tip-txt pic zzzzz9.99.
            05 line number plus 1.
                10 col 3 value 'TIP PER PERSON:'.
-               10 col 34 source f-tip-per-customer-txt pic zzzzz9.99.
+               10 col 26 source f-tip-per-customer-txt pic zzzzz9.99.
            05 line number plus 2.
                10 col 3 value 'GRAND TOTAL (INC. TIP):'.
-               10 col 34 source f-total-with-tip pic zzzzz9.99.
+               10 col 26 source f-total-with-tip pic zzzzz9.99.
 
        01 type is report footing.
            05 line number plus 1.
-               10 col 1 source c-stars pic x(56).
+               10 col 1 source c-stars pic x(38).
            05 line number plus 1.
-               10 col 18 value 'THANK YOU - PLEASE COME AGAIN!'.
+               10 col 14 value 'END REPORT'.
            05 line number plus 1.
-               10 col 1 source c-stars pic x(56).
+               10 col 1 source c-stars pic x(38).
 
 
       *>=============================================================
