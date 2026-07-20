@@ -1,10 +1,13 @@
 package ca.rmen.tipcalculator.ui.theme
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.Font
 import tipcalculator.shared.generated.resources.Res
 import tipcalculator.shared.generated.resources.decterm
@@ -82,7 +85,15 @@ private fun appTypography(
 
 @Composable
 fun AppTheme(content: @Composable () -> Unit) {
+    val cornerRadius = 0.dp
     MaterialTheme(
+        shapes=Shapes(
+            extraSmall = RoundedCornerShape(cornerRadius),
+            small = RoundedCornerShape(cornerRadius),
+            medium = RoundedCornerShape(cornerRadius),
+            large = RoundedCornerShape(cornerRadius),
+            extraLarge = RoundedCornerShape(cornerRadius)
+        ),
         typography = appTypography(
             // https://www.dafont.com/dec-terminal-modern.font
             fontFamily = FontFamily(
