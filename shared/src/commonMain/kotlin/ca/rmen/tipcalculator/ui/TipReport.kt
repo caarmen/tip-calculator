@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,15 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ca.rmen.tipcalculator.ui.theme.AppTheme
 import ca.rmen.tipcalculator.ui.theme.ReportTheme
 
 @Composable
-fun TipReport(tipReportContent: List<String>) {
+fun TipReport(tipReportContent: List<String>, modifier: Modifier = Modifier) {
     val barHeight = 48.dp
     val holeDiameter = barHeight / 4
 
-    Box(modifier = Modifier.fillMaxSize().clipToBounds()) {
+    Box(modifier = modifier.fillMaxSize().clipToBounds()) {
         Column(modifier = Modifier.fillMaxWidth())
         {
             tipReportContent.forEachIndexed { index, line ->
@@ -69,6 +69,15 @@ fun PaperHole(diameter: Dp, modifier: Modifier = Modifier) {
 @Composable
 private fun TipReportPreview() {
     ReportTheme {
-        TipReport(tipReportContent = listOf("******", "line 1", "line 2"))
+        Box(
+            modifier = Modifier.size(176.dp).background(color = Color.Green).padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+
+            TipReport(
+                tipReportContent = listOf("*******", "TIPCALC", "*******"),
+                modifier = Modifier.clip(shape = RoundedCornerShape(0.dp)).background(Color.Green)
+            )
+        }
     }
 }
