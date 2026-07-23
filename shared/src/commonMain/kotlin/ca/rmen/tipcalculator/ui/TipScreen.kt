@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,10 +40,16 @@ fun TipScreen(
     modifier: Modifier = Modifier.Companion,
 ) {
     var showReport by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+    LaunchedEffect(tipResultState) {
+        if (tipResultState != null) {
+            scrollState.animateScrollTo(scrollState.maxValue)
+        }
+    }
     Column(
         modifier = modifier.background(MaterialTheme.colorScheme.primaryContainer)
             .background(formBackgroundColor)
-            .safeContentPadding().fillMaxSize().verticalScroll(rememberScrollState()),
+            .safeContentPadding().fillMaxSize().verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TipForm(
